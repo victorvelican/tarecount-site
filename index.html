@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TareCount — Trust, but recount.</title>
+<meta name="description" content="Independent audits of AI support billing. Your AI support vendor counts its own billable resolutions. We recount them from your own helpdesk data.">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23faf8f4'/%3E%3Cpath d='M6 22h20M16 22V9M9 13h14' stroke='%231a1c1f' stroke-width='2' fill='none' stroke-linecap='square'/%3E%3C/svg%3E">
+<meta property="og:title" content="TareCount — Trust, but recount.">
+<meta property="og:description" content="Your AI support vendor counts its own billable resolutions. We recount them from your own helpdesk data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tarecount.com/">
+<style>
+  /* ------------------------------------------------------------------
+     A statement, not a startup page. Paper, ink, hairline rules,
+     tabular figures. One file, no fonts to fetch, no scripts.
+     ------------------------------------------------------------------ */
+  :root {
+    --paper:      #faf8f4;
+    --sheet:      #fffefb;
+    --ink:        #1a1c1f;
+    --ink-soft:   #50565e;
+    --ink-faint:  #7c828b;
+    --rule:       #ddd8cd;
+    --rule-hard:  #1a1c1f;
+    --accent:     #8c2f24;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: 47rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 3.5rem) 0;
+  }
+
+  /* --- micro-label: the small caps heading over each statement block --- */
+  .label {
+    font-family: var(--sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 1.1rem;
+  }
+
+  section {
+    border-top: 1px solid var(--rule);
+    padding: clamp(2.25rem, 5vw, 3.25rem) 0;
+  }
+
+  /* ---------------------------- masthead ---------------------------- */
+
+  header {
+    padding-bottom: clamp(2.25rem, 5vw, 3rem);
+  }
+
+  .wordmark {
+    font-size: clamp(2.75rem, 9vw, 4.25rem);
+    line-height: 1;
+    letter-spacing: -0.022em;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .tagline {
+    font-size: clamp(1.0625rem, 3vw, 1.25rem);
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0.7rem 0 0;
+  }
+
+  /* the double rule of a letterhead: thick over thin, with air between */
+  .letterhead-rule {
+    box-sizing: content-box;
+    border: 0;
+    border-top: 2px solid var(--rule-hard);
+    border-bottom: 1px solid var(--rule-hard);
+    height: 4px;
+    margin: 1.4rem 0 1.1rem;
+  }
+
+  .definition {
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    color: var(--ink-faint);
+    margin: 0 0 clamp(1.75rem, 4vw, 2.5rem);
+  }
+  .definition em { font-family: var(--serif); font-size: 1rem; }
+
+  .lede {
+    font-size: clamp(1.3125rem, 4vw, 1.75rem);
+    line-height: 1.38;
+    letter-spacing: -0.011em;
+    margin: 0;
+    max-width: 32ch;
+  }
+  .lede .second {
+    display: block;
+    margin-top: 0.45rem;
+  }
+  .lede .second strong { font-weight: 600; }
+
+  /* ------------------------- the case / proof ------------------------ */
+
+  .case {
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    margin: 0;
+    color: var(--ink);
+  }
+  .case q { quotes: "\201C" "\201D"; }
+
+  /* a two-line ledger: the only figures on this page */
+  .ledger {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.9rem 0 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .ledger th, .ledger td {
+    padding: 0.62rem 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: baseline;
+  }
+  .ledger tr:last-child th, .ledger tr:last-child td { border-bottom: 0; }
+  .ledger th {
+    text-align: left;
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
+  }
+  .ledger td {
+    text-align: right;
+    font-size: 1.375rem;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    padding-left: 1rem;
+  }
+  .ledger .recount td { color: var(--accent); }
+  .ledger .recount th { color: var(--ink); }
+
+  /* ------------------------- how it works --------------------------- */
+
+  ol.steps {
+    list-style: none;
+    counter-reset: step;
+    margin: 0;
+    padding: 0;
+  }
+  ol.steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 3.25rem 1fr;
+    gap: 0 1rem;
+    padding: 1.15rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  ol.steps li:first-child { padding-top: 0; }
+  ol.steps li:last-child { border-bottom: 0; padding-bottom: 0; }
+  ol.steps li::before {
+    content: "0" counter(step);
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+    padding-top: 0.35rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .steps h3 {
+    font-size: 1.1875rem;
+    font-weight: 600;
+    letter-spacing: -0.008em;
+    margin: 0 0 0.25rem;
+  }
+  .steps p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.58;
+  }
+  .steps .detail {
+    margin-top: 0.55rem;
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-faint);
+  }
+
+  /* ----------------------------- offer ------------------------------ */
+
+  .offer {
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    margin: 0;
+  }
+  .offer dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.55rem 1.25rem;
+    align-items: baseline;
+  }
+  .offer dt {
+    font-size: 1.0625rem;
+    line-height: 1.45;
+  }
+  .offer dd {
+    margin: 0;
+    text-align: right;
+    font-size: 1.0625rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .offer .price { font-weight: 600; }
+  .offer .free { font-family: var(--sans); font-size: 0.875rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
+  .offer hr {
+    grid-column: 1 / -1;
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 0.35rem 0;
+  }
+
+  .cta-row {
+    margin-top: 1.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.35rem;
+  }
+
+  .cta {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    padding: 0.95rem 1.6rem;
+    border: 1px solid var(--ink);
+  }
+  .cta:hover, .cta:focus-visible { background: var(--accent); border-color: var(--accent); }
+  .cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  .cta-note {
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+  .cta-note a { color: inherit; }
+
+  /* ----------------------------- footer ----------------------------- */
+
+  footer {
+    border-top: 1px solid var(--rule-hard);
+    margin-top: clamp(1.5rem, 4vw, 2.25rem);
+    padding: 1.4rem 0 clamp(2.5rem, 6vw, 4rem);
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    color: var(--ink-faint);
+  }
+  footer p { margin: 0; text-wrap: pretty; }
+  footer .sep { color: #b4ada0; padding: 0 0.35em; }
+  /* keep the two short claims off each other's line ends */
+  footer .unit { white-space: nowrap; }
+  @media (max-width: 40rem) {
+    footer .unit { white-space: normal; }
+  }
+
+  a { color: var(--accent); }
+
+  @media (max-width: 34rem) {
+    ol.steps li { grid-template-columns: 1fr; gap: 0; }
+    ol.steps li::before { display: block; padding: 0 0 0.35rem; }
+    .offer dl { grid-template-columns: 1fr; }
+    .offer dd { text-align: left; }
+    .cta { display: block; text-align: center; }
+  }
+
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .cta { background: #fff; color: #000; }
+    section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+
+  <header>
+    <h1 class="wordmark">TareCount</h1>
+    <p class="tagline">Trust, but recount.</p>
+    <hr class="letterhead-rule">
+    <p class="definition"><em>tare</em> (v.): to zero a scale before weighing.</p>
+    <p class="lede">
+      Your AI support vendor counts its own billable &ldquo;resolutions.&rdquo;
+      <span class="second">We <strong>recount</strong> them from your own helpdesk data.</span>
+    </p>
+  </header>
+
+  <section aria-labelledby="case-heading">
+    <p class="label" id="case-heading">What a recount finds</p>
+    <p class="case">
+      One support team hand-checked its AI agent&rsquo;s bill: the vendor claimed a
+      40% resolution rate. The real number was 12.5% &mdash; mostly
+      <q>assumed resolved</q>: customers who gave up and went silent.
+    </p>
+    <table class="ledger">
+      <tbody>
+        <tr>
+          <th scope="row">Resolution rate, as billed by the vendor</th>
+          <td>40%</td>
+        </tr>
+        <tr class="recount">
+          <th scope="row">Resolution rate, recounted from the helpdesk export</th>
+          <td>12.5%</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section aria-labelledby="how-heading">
+    <p class="label" id="how-heading">How it works</p>
+    <ol class="steps">
+      <li>
+        <div>
+          <h3>Export one billing month</h3>
+          <p>Fifteen minutes of your time. We send you the exact clicks for your helpdesk.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Our tool recounts on your machine</h3>
+          <p>It reads the export where it sits and writes its reports next to it. Only the counts come back to us.</p>
+          <p class="detail">No conversations, no customer names, no message text ever leaves your laptop.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>You get a settlement statement</h3>
+          <p>Their count, their own published rules, and honest rules &mdash; side by side.</p>
+          <p class="detail">
+            Every disputed conversation is listed by id, with the rule it failed and
+            why, and the dollar variance under each standard. Underbilling is listed
+            too: a statement you can hand to the vendor is one that includes the
+            findings in their favour.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="offer-heading">
+    <p class="label" id="offer-heading">Engagement</p>
+    <div class="offer">
+      <dl>
+        <dt>Sample check on one month</dt>
+        <dd class="free">Free</dd>
+        <hr>
+        <dt>Full audit &plus; negotiation evidence pack</dt>
+        <dd class="price">$2,500 flat</dd>
+      </dl>
+    </div>
+    <div class="cta-row">
+      <a class="cta" href="mailto:victor@tarecount.com">Run a free sample check</a>
+      <p class="cta-note">
+        Or write to <a href="mailto:victor@tarecount.com">victor@tarecount.com</a>.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <span class="unit">TareCount</span><span class="sep">·</span><span
+      class="unit">Independent audits of AI support billing</span><span
+      class="sep">·</span>Named by both sides or hired by the buyer &mdash;
+      never paid by the vendor we check.
+    </p>
+  </footer>
+
+</main>
+</body>
+</html>
