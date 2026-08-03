@@ -6,32 +6,64 @@
 <title>TareCount — Trust, but recount.</title>
 <meta name="description" content="Independent audits of AI support billing. Your AI support vendor counts its own billable resolutions. We recount them from your own helpdesk data.">
 <meta name="color-scheme" content="light">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23faf8f4'/%3E%3Cpath d='M6 22h20M16 22V9M9 13h14' stroke='%231a1c1f' stroke-width='2' fill='none' stroke-linecap='square'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F4F1E9'/%3E%3Cpath d='M6 22h20M16 22V9M9 13h14' stroke='%231B1815' stroke-width='2' fill='none' stroke-linecap='square'/%3E%3Cpath d='M16 24.5l-3-3.5h6z' fill='%23B0552F'/%3E%3C/svg%3E">
 <meta property="og:title" content="TareCount — Trust, but recount.">
 <meta property="og:description" content="Your AI support vendor counts its own billable resolutions. We recount them from your own helpdesk data.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tarecount.com/">
 <style>
   /* ------------------------------------------------------------------
-     A statement, not a startup page. Paper, ink, hairline rules,
-     tabular figures. One file, no fonts to fetch, no scripts.
+     TareCount — one file. Every byte is served from this repo: three
+     self-hosted OFL families, one inline SVG, no scripts, no requests
+     to anywhere else.
      ------------------------------------------------------------------ */
+
+  /* Wordmark. */
+  @font-face {
+    font-family: "Gloock";
+    src: url(fonts/gloock-latin-400.woff2) format("woff2");
+    font-weight: 400; font-style: normal; font-display: swap;
+    unicode-range: U+0000-00FF;
+  }
+  /* Tagline and asides. */
+  @font-face {
+    font-family: "Instrument Serif";
+    src: url(fonts/instrumentserif-latin-400italic.woff2) format("woff2");
+    font-weight: 400; font-style: italic; font-display: swap;
+    unicode-range: U+0000-00FF;
+  }
+  /* Every number on the page, and the document itself. */
+  @font-face {
+    font-family: "IBM Plex Mono";
+    src: url(fonts/ibmplexmono-latin-400.woff2) format("woff2");
+    font-weight: 400; font-style: normal; font-display: swap;
+    unicode-range: U+0000-00FF;
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    src: url(fonts/ibmplexmono-latin-600.woff2) format("woff2");
+    font-weight: 600; font-style: normal; font-display: swap;
+    unicode-range: U+0000-00FF;
+  }
+
   :root {
-    --paper:      #faf8f4;
-    --sheet:      #fffefb;
-    --ink:        #1a1c1f;
-    --ink-soft:   #50565e;
-    --ink-faint:  #7c828b;
-    --rule:       #ddd8cd;
-    --rule-hard:  #1a1c1f;
-    --accent:     #8c2f24;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --paper:      #f4f1e9;
+    --sheet:      #fbfaf6;
+    --ink:        #1b1815;
+    --ink-soft:   #56504a;
+    --ink-faint:  #8b8478;
+    --rule:       #d8d2c5;
+    --tally:      #ded7c8;
+    --terracotta: #b0552f;
+
+    --display: "Gloock", "Iowan Old Style", Georgia, "Times New Roman", serif;
+    --italic:  "Instrument Serif", Georgia, "Times New Roman", serif;
+    --mono:    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --serif:   "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
     color-scheme: light;
   }
 
   * { box-sizing: border-box; }
-
   html { -webkit-text-size-adjust: 100%; }
 
   body {
@@ -46,95 +78,123 @@
   }
 
   .sheet {
-    max-width: 47rem;
+    max-width: 52rem;
     margin: 0 auto;
     padding: clamp(2rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 3.5rem) 0;
   }
 
-  /* --- micro-label: the small caps heading over each statement block --- */
-  .label {
-    font-family: var(--sans);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin: 0 0 1.1rem;
+  /* ------------------------- the zero line --------------------------
+     A 2px ink rule with the terracotta pointer resting on it: the mark
+     a scale is zeroed against. It separates every section.
+     ------------------------------------------------------------------ */
+  .zero-line {
+    position: relative;
+    border-top: 2px solid var(--ink);
+  }
+  .zero-line::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 0;
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid var(--terracotta);
   }
 
-  section {
-    border-top: 1px solid var(--rule);
-    padding: clamp(2.25rem, 5vw, 3.25rem) 0;
+  section { padding: clamp(2.25rem, 5vw, 3.25rem) 0; }
+
+  /* micro-label over each block */
+  .label {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 1.15rem;
   }
 
   /* ---------------------------- masthead ---------------------------- */
 
-  header {
-    padding-bottom: clamp(2.25rem, 5vw, 3rem);
+  header { padding-bottom: clamp(2.25rem, 5vw, 3rem); }
+
+  .masthead {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0 clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
   }
 
   .wordmark {
-    font-size: clamp(2.75rem, 9vw, 4.25rem);
-    line-height: 1;
-    letter-spacing: -0.022em;
+    font-family: var(--display);
+    font-size: clamp(3rem, 10vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.005em;
     font-weight: 400;
     margin: 0;
   }
 
   .tagline {
-    font-size: clamp(1.0625rem, 3vw, 1.25rem);
+    font-family: var(--italic);
     font-style: italic;
-    color: var(--ink-soft);
-    margin: 0.7rem 0 0;
+    font-size: clamp(1.25rem, 3.6vw, 1.625rem);
+    line-height: 1.2;
+    color: var(--terracotta);
+    margin: 0.55rem 0 0;
   }
 
-  /* the double rule of a letterhead: thick over thin, with air between */
-  .letterhead-rule {
-    box-sizing: content-box;
-    border: 0;
-    border-top: 2px solid var(--rule-hard);
-    border-bottom: 1px solid var(--rule-hard);
-    height: 4px;
-    margin: 1.4rem 0 1.1rem;
-  }
+  .masthead .zero-line { margin: 1.5rem 0 1.1rem; }
 
   .definition {
-    font-family: var(--sans);
-    font-size: 0.875rem;
+    font-family: var(--italic);
+    font-style: italic;
+    font-size: 1.0625rem;
     color: var(--ink-faint);
     margin: 0 0 clamp(1.75rem, 4vw, 2.5rem);
   }
-  .definition em { font-family: var(--serif); font-size: 1rem; }
 
   .lede {
-    font-size: clamp(1.3125rem, 4vw, 1.75rem);
+    font-size: clamp(1.3125rem, 3.6vw, 1.75rem);
     line-height: 1.38;
     letter-spacing: -0.011em;
     margin: 0;
-    max-width: 32ch;
+    max-width: 30ch;
   }
-  .lede .second {
-    display: block;
-    margin-top: 0.45rem;
-  }
+  .lede .second { display: block; margin-top: 0.45rem; }
   .lede .second strong { font-weight: 600; }
+
+  /* --------------------------- tally field ---------------------------
+     96 groups, 12 struck in terracotta: 12.5%, the recounted rate.
+     ------------------------------------------------------------------ */
+  .tally-field {
+    grid-row: span 2;
+    align-self: start;
+    padding-top: 0.4rem;
+  }
+  .tally { display: block; width: clamp(9rem, 17vw, 13rem); height: auto; }
+  .tally-plain  { stroke: var(--tally); }
+  .tally-marked { stroke: var(--terracotta); }
+  .tally-note {
+    font-family: var(--mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0.7rem 0 0;
+    line-height: 1.5;
+  }
+  .tally-note b { color: var(--terracotta); font-weight: 600; }
 
   /* ------------------------- the case / proof ------------------------ */
 
-  .case {
-    font-size: 1.0625rem;
-    line-height: 1.62;
-    margin: 0;
-    color: var(--ink);
-  }
+  .case { font-size: 1.0625rem; line-height: 1.62; margin: 0; max-width: 60ch; }
   .case q { quotes: "\201C" "\201D"; }
 
-  /* a two-line ledger: the only figures on this page */
   .ledger {
     width: 100%;
     border-collapse: collapse;
     margin: 1.9rem 0 0;
-    font-variant-numeric: tabular-nums;
   }
   .ledger th, .ledger td {
     padding: 0.62rem 0;
@@ -144,30 +204,26 @@
   .ledger tr:last-child th, .ledger tr:last-child td { border-bottom: 0; }
   .ledger th {
     text-align: left;
-    font-family: var(--sans);
-    font-size: 0.8125rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
     font-weight: 400;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     color: var(--ink-soft);
   }
   .ledger td {
     text-align: right;
+    font-family: var(--mono);
     font-size: 1.375rem;
-    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
     white-space: nowrap;
     padding-left: 1rem;
   }
-  .ledger .recount td { color: var(--accent); }
+  .ledger .recount td { color: var(--terracotta); font-weight: 600; }
   .ledger .recount th { color: var(--ink); }
 
   /* ------------------------- how it works --------------------------- */
 
-  ol.steps {
-    list-style: none;
-    counter-reset: step;
-    margin: 0;
-    padding: 0;
-  }
+  ol.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; }
   ol.steps li {
     counter-increment: step;
     display: grid;
@@ -180,34 +236,94 @@
   ol.steps li:last-child { border-bottom: 0; padding-bottom: 0; }
   ol.steps li::before {
     content: "0" counter(step);
-    font-family: var(--sans);
+    font-family: var(--mono);
     font-size: 0.8125rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    color: var(--ink-faint);
-    padding-top: 0.35rem;
+    color: var(--terracotta);
+    padding-top: 0.4rem;
     font-variant-numeric: tabular-nums;
   }
-  .steps h3 {
-    font-size: 1.1875rem;
-    font-weight: 600;
-    letter-spacing: -0.008em;
-    margin: 0 0 0.25rem;
-  }
-  .steps p {
-    margin: 0;
-    color: var(--ink-soft);
-    font-size: 1rem;
-    line-height: 1.58;
-  }
+  .steps h3 { font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.008em; margin: 0 0 0.25rem; }
+  .steps p { margin: 0; color: var(--ink-soft); font-size: 1rem; line-height: 1.58; }
   .steps .detail {
     margin-top: 0.55rem;
     padding-left: 0.9rem;
     border-left: 1px solid var(--rule);
-    font-family: var(--sans);
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     line-height: 1.6;
     color: var(--ink-faint);
+  }
+
+  /* --------------------- the document you get ----------------------- */
+
+  .doc-intro { margin: 0 0 1.5rem; color: var(--ink-soft); max-width: 60ch; text-wrap: pretty; }
+
+  .doc {
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    padding: clamp(1.1rem, 3.2vw, 1.9rem);
+  }
+  .doc-inner {
+    font-family: var(--mono);
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    font-variant-numeric: tabular-nums;
+  }
+  /* The summary tables are three columns and must always fit — the figures are
+     the point of the section. Only the five-column dispute table scrolls, and
+     it keeps the conversation id in view while it does. */
+  .scroll-x { overflow-x: auto; }
+  table.stmt.wide { min-width: 27rem; }
+  /* Two long labels and a count — the label wraps rather than pushing the
+     count off a narrow screen. */
+  table.stmt.also th { white-space: normal; padding-right: 1.25rem; }
+  table.stmt.also td { width: 1%; }
+  .doc h3 {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    margin: 0 0 0.15rem;
+  }
+  .doc .meta { color: var(--ink-faint); margin: 0 0 1.35rem; font-size: 0.75rem; }
+  .doc .rule-2 { border: 0; border-top: 2px solid var(--ink); margin: 0 0 1.1rem; }
+  .doc .block-label {
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    color: var(--ink-faint);
+    margin: 1.5rem 0 0.5rem;
+  }
+  .doc .block-label:first-of-type { margin-top: 0; }
+
+  table.stmt { width: 100%; border-collapse: collapse; }
+  table.stmt th, table.stmt td { padding: 0.15rem 0.9rem 0.15rem 0; text-align: right; white-space: nowrap; }
+  table.stmt th:first-child, table.stmt td:first-child { text-align: left; }
+  table.stmt td:last-child, table.stmt th:last-child { padding-right: 0; }
+  table.stmt thead th {
+    font-weight: 400;
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.3rem;
+  }
+  table.stmt thead th:last-child { text-align: left; }
+  table.stmt td:last-child { text-align: left; white-space: normal; }
+  table.stmt .total td, table.stmt .total th {
+    border-top: 1px solid var(--rule);
+    padding-top: 0.42rem;
+    font-weight: 600;
+  }
+  table.stmt .variance td, table.stmt .variance th { color: var(--terracotta); }
+  table.stmt tr.disputed td, table.stmt tr.disputed th { color: var(--terracotta); }
+  .doc .elision { color: var(--ink-faint); padding-top: 0.35rem; }
+
+  .doc-foot {
+    font-size: 0.875rem;
+    color: var(--ink-faint);
+    margin: 1.15rem 0 0;
+    max-width: 62ch;
+    text-wrap: pretty;
   }
 
   /* ----------------------------- offer ------------------------------ */
@@ -225,25 +341,24 @@
     gap: 0.55rem 1.25rem;
     align-items: baseline;
   }
-  .offer dt {
-    font-size: 1.0625rem;
-    line-height: 1.45;
-  }
+  .offer dt { font-size: 1.0625rem; line-height: 1.45; }
   .offer dd {
     margin: 0;
     text-align: right;
+    font-family: var(--mono);
     font-size: 1.0625rem;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
   .offer .price { font-weight: 600; }
-  .offer .free { font-family: var(--sans); font-size: 0.875rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
-  .offer hr {
-    grid-column: 1 / -1;
-    border: 0;
-    border-top: 1px solid var(--rule);
-    margin: 0.35rem 0;
+  .offer .free {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terracotta);
   }
+  .offer hr { grid-column: 1 / -1; border: 0; border-top: 1px solid var(--rule); margin: 0.35rem 0; }
 
   .cta-row {
     margin-top: 1.9rem;
@@ -252,57 +367,70 @@
     align-items: center;
     gap: 1rem 1.35rem;
   }
-
   .cta {
     display: inline-block;
     background: var(--ink);
     color: var(--paper);
-    font-family: var(--sans);
-    font-size: 0.9375rem;
+    font-family: var(--mono);
+    font-size: 0.875rem;
     font-weight: 600;
-    letter-spacing: 0.015em;
+    letter-spacing: 0.02em;
     text-decoration: none;
     padding: 0.95rem 1.6rem;
     border: 1px solid var(--ink);
   }
-  .cta:hover, .cta:focus-visible { background: var(--accent); border-color: var(--accent); }
+  .cta:hover, .cta:focus-visible { background: var(--terracotta); border-color: var(--terracotta); }
   .cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-
-  .cta-note {
-    font-family: var(--sans);
-    font-size: 0.875rem;
-    color: var(--ink-faint);
-    margin: 0;
-  }
+  .cta-note { font-family: var(--mono); font-size: 0.8125rem; color: var(--ink-faint); margin: 0; }
   .cta-note a { color: inherit; }
 
   /* ----------------------------- footer ----------------------------- */
 
   footer {
-    border-top: 1px solid var(--rule-hard);
     margin-top: clamp(1.5rem, 4vw, 2.25rem);
     padding: 1.4rem 0 clamp(2.5rem, 6vw, 4rem);
-    font-family: var(--sans);
-    font-size: 0.8125rem;
-    line-height: 1.75;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.85;
     color: var(--ink-faint);
   }
   footer p { margin: 0; text-wrap: pretty; }
-  footer .sep { color: #b4ada0; padding: 0 0.35em; }
-  /* keep the two short claims off each other's line ends */
+  footer .sep { color: var(--terracotta); padding: 0 0.4em; }
   footer .unit { white-space: nowrap; }
+  footer .fonts { margin-top: 0.9rem; font-size: 0.6875rem; }
+  footer .fonts a { color: inherit; }
+
+  a { color: var(--terracotta); }
+
+  /* ---------------------------- narrow ------------------------------ */
+
+  @media (max-width: 46rem) {
+    .masthead { grid-template-columns: 1fr; }
+    .tally-field {
+      grid-row: auto;
+      order: 3;
+      padding-top: 1.75rem;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0 1.1rem;
+      align-items: center;
+    }
+    .tally { width: 8.5rem; }
+    .tally-note { margin: 0; }
+    .lede { max-width: none; }
+  }
   @media (max-width: 40rem) {
     footer .unit { white-space: normal; }
   }
-
-  a { color: var(--accent); }
-
   @media (max-width: 34rem) {
     ol.steps li { grid-template-columns: 1fr; gap: 0; }
     ol.steps li::before { display: block; padding: 0 0 0.35rem; }
     .offer dl { grid-template-columns: 1fr; }
     .offer dd { text-align: left; }
     .cta { display: block; text-align: center; }
+    .doc-inner { font-size: 0.6875rem; }
+    .doc h3 { font-size: 1.0625rem; }
+    table.stmt th, table.stmt td { padding-right: 0.6rem; }
   }
 
   @media print {
@@ -310,22 +438,37 @@
     .cta { background: #fff; color: #000; }
     section { break-inside: avoid; }
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
 </style>
 </head>
 <body>
 <main class="sheet">
 
   <header>
-    <h1 class="wordmark">TareCount</h1>
-    <p class="tagline">Trust, but recount.</p>
-    <hr class="letterhead-rule">
-    <p class="definition"><em>tare</em> (v.): to zero a scale before weighing.</p>
-    <p class="lede">
-      Your AI support vendor counts its own billable &ldquo;resolutions.&rdquo;
-      <span class="second">We <strong>recount</strong> them from your own helpdesk data.</span>
-    </p>
+    <div class="masthead">
+      <div>
+        <h1 class="wordmark">TareCount</h1>
+        <p class="tagline">Trust, but recount.</p>
+        <div class="zero-line"></div>
+        <p class="definition">tare (v.): to zero a scale before weighing.</p>
+      </div>
+
+      <div class="tally-field">
+        <svg class="tally" viewBox="0 0 208 360" width="208" height="360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ninety-six tally groups; twelve marked — 12.5 percent, the recounted resolution rate."><g class="tally-plain" fill="none" stroke-width="1.4" stroke-linecap="round"><path d="M3.5 6.0V23.0M7.7 6.0V23.0M11.9 6.0V23.0M16.1 6.0V23.0M1.9 21.5L17.7 7.5M29.5 6.0V23.0M33.7 6.0V23.0M37.9 6.0V23.0M42.1 6.0V23.0M27.9 21.5L43.7 7.5M55.5 6.0V23.0M59.7 6.0V23.0M63.9 6.0V23.0M68.1 6.0V23.0M53.9 21.5L69.7 7.5M107.5 6.0V23.0M111.7 6.0V23.0M115.9 6.0V23.0M120.1 6.0V23.0M105.9 21.5L121.7 7.5M133.5 6.0V23.0M137.7 6.0V23.0M141.9 6.0V23.0M146.1 6.0V23.0M131.9 21.5L147.7 7.5M159.5 6.0V23.0M163.7 6.0V23.0M167.9 6.0V23.0M172.1 6.0V23.0M157.9 21.5L173.7 7.5M185.5 6.0V23.0M189.7 6.0V23.0M193.9 6.0V23.0M198.1 6.0V23.0M183.9 21.5L199.7 7.5M3.5 36.0V53.0M7.7 36.0V53.0M11.9 36.0V53.0M16.1 36.0V53.0M1.9 51.5L17.7 37.5M55.5 36.0V53.0M59.7 36.0V53.0M63.9 36.0V53.0M68.1 36.0V53.0M53.9 51.5L69.7 37.5M81.5 36.0V53.0M85.7 36.0V53.0M89.9 36.0V53.0M94.1 36.0V53.0M79.9 51.5L95.7 37.5M107.5 36.0V53.0M111.7 36.0V53.0M115.9 36.0V53.0M120.1 36.0V53.0M105.9 51.5L121.7 37.5M133.5 36.0V53.0M137.7 36.0V53.0M141.9 36.0V53.0M146.1 36.0V53.0M131.9 51.5L147.7 37.5M185.5 36.0V53.0M189.7 36.0V53.0M193.9 36.0V53.0M198.1 36.0V53.0M183.9 51.5L199.7 37.5M3.5 66.0V83.0M7.7 66.0V83.0M11.9 66.0V83.0M16.1 66.0V83.0M1.9 81.5L17.7 67.5M29.5 66.0V83.0M33.7 66.0V83.0M37.9 66.0V83.0M42.1 66.0V83.0M27.9 81.5L43.7 67.5M55.5 66.0V83.0M59.7 66.0V83.0M63.9 66.0V83.0M68.1 66.0V83.0M53.9 81.5L69.7 67.5M81.5 66.0V83.0M85.7 66.0V83.0M89.9 66.0V83.0M94.1 66.0V83.0M79.9 81.5L95.7 67.5M107.5 66.0V83.0M111.7 66.0V83.0M115.9 66.0V83.0M120.1 66.0V83.0M105.9 81.5L121.7 67.5M133.5 66.0V83.0M137.7 66.0V83.0M141.9 66.0V83.0M146.1 66.0V83.0M131.9 81.5L147.7 67.5M185.5 66.0V83.0M189.7 66.0V83.0M193.9 66.0V83.0M198.1 66.0V83.0M183.9 81.5L199.7 67.5M3.5 96.0V113.0M7.7 96.0V113.0M11.9 96.0V113.0M16.1 96.0V113.0M1.9 111.5L17.7 97.5M29.5 96.0V113.0M33.7 96.0V113.0M37.9 96.0V113.0M42.1 96.0V113.0M27.9 111.5L43.7 97.5M55.5 96.0V113.0M59.7 96.0V113.0M63.9 96.0V113.0M68.1 96.0V113.0M53.9 111.5L69.7 97.5M81.5 96.0V113.0M85.7 96.0V113.0M89.9 96.0V113.0M94.1 96.0V113.0M79.9 111.5L95.7 97.5M107.5 96.0V113.0M111.7 96.0V113.0M115.9 96.0V113.0M120.1 96.0V113.0M105.9 111.5L121.7 97.5M159.5 96.0V113.0M163.7 96.0V113.0M167.9 96.0V113.0M172.1 96.0V113.0M157.9 111.5L173.7 97.5M185.5 96.0V113.0M189.7 96.0V113.0M193.9 96.0V113.0M198.1 96.0V113.0M183.9 111.5L199.7 97.5M3.5 126.0V143.0M7.7 126.0V143.0M11.9 126.0V143.0M16.1 126.0V143.0M1.9 141.5L17.7 127.5M29.5 126.0V143.0M33.7 126.0V143.0M37.9 126.0V143.0M42.1 126.0V143.0M27.9 141.5L43.7 127.5M55.5 126.0V143.0M59.7 126.0V143.0M63.9 126.0V143.0M68.1 126.0V143.0M53.9 141.5L69.7 127.5M81.5 126.0V143.0M85.7 126.0V143.0M89.9 126.0V143.0M94.1 126.0V143.0M79.9 141.5L95.7 127.5M107.5 126.0V143.0M111.7 126.0V143.0M115.9 126.0V143.0M120.1 126.0V143.0M105.9 141.5L121.7 127.5M159.5 126.0V143.0M163.7 126.0V143.0M167.9 126.0V143.0M172.1 126.0V143.0M157.9 141.5L173.7 127.5M185.5 126.0V143.0M189.7 126.0V143.0M193.9 126.0V143.0M198.1 126.0V143.0M183.9 141.5L199.7 127.5M3.5 156.0V173.0M7.7 156.0V173.0M11.9 156.0V173.0M16.1 156.0V173.0M1.9 171.5L17.7 157.5M29.5 156.0V173.0M33.7 156.0V173.0M37.9 156.0V173.0M42.1 156.0V173.0M27.9 171.5L43.7 157.5M55.5 156.0V173.0M59.7 156.0V173.0M63.9 156.0V173.0M68.1 156.0V173.0M53.9 171.5L69.7 157.5M81.5 156.0V173.0M85.7 156.0V173.0M89.9 156.0V173.0M94.1 156.0V173.0M79.9 171.5L95.7 157.5M107.5 156.0V173.0M111.7 156.0V173.0M115.9 156.0V173.0M120.1 156.0V173.0M105.9 171.5L121.7 157.5M133.5 156.0V173.0M137.7 156.0V173.0M141.9 156.0V173.0M146.1 156.0V173.0M131.9 171.5L147.7 157.5M185.5 156.0V173.0M189.7 156.0V173.0M193.9 156.0V173.0M198.1 156.0V173.0M183.9 171.5L199.7 157.5M3.5 186.0V203.0M7.7 186.0V203.0M11.9 186.0V203.0M16.1 186.0V203.0M1.9 201.5L17.7 187.5M29.5 186.0V203.0M33.7 186.0V203.0M37.9 186.0V203.0M42.1 186.0V203.0M27.9 201.5L43.7 187.5M55.5 186.0V203.0M59.7 186.0V203.0M63.9 186.0V203.0M68.1 186.0V203.0M53.9 201.5L69.7 187.5M81.5 186.0V203.0M85.7 186.0V203.0M89.9 186.0V203.0M94.1 186.0V203.0M79.9 201.5L95.7 187.5M107.5 186.0V203.0M111.7 186.0V203.0M115.9 186.0V203.0M120.1 186.0V203.0M105.9 201.5L121.7 187.5M159.5 186.0V203.0M163.7 186.0V203.0M167.9 186.0V203.0M172.1 186.0V203.0M157.9 201.5L173.7 187.5M185.5 186.0V203.0M189.7 186.0V203.0M193.9 186.0V203.0M198.1 186.0V203.0M183.9 201.5L199.7 187.5M3.5 216.0V233.0M7.7 216.0V233.0M11.9 216.0V233.0M16.1 216.0V233.0M1.9 231.5L17.7 217.5M29.5 216.0V233.0M33.7 216.0V233.0M37.9 216.0V233.0M42.1 216.0V233.0M27.9 231.5L43.7 217.5M55.5 216.0V233.0M59.7 216.0V233.0M63.9 216.0V233.0M68.1 216.0V233.0M53.9 231.5L69.7 217.5M81.5 216.0V233.0M85.7 216.0V233.0M89.9 216.0V233.0M94.1 216.0V233.0M79.9 231.5L95.7 217.5M107.5 216.0V233.0M111.7 216.0V233.0M115.9 216.0V233.0M120.1 216.0V233.0M105.9 231.5L121.7 217.5M159.5 216.0V233.0M163.7 216.0V233.0M167.9 216.0V233.0M172.1 216.0V233.0M157.9 231.5L173.7 217.5M185.5 216.0V233.0M189.7 216.0V233.0M193.9 216.0V233.0M198.1 216.0V233.0M183.9 231.5L199.7 217.5M3.5 246.0V263.0M7.7 246.0V263.0M11.9 246.0V263.0M16.1 246.0V263.0M1.9 261.5L17.7 247.5M29.5 246.0V263.0M33.7 246.0V263.0M37.9 246.0V263.0M42.1 246.0V263.0M27.9 261.5L43.7 247.5M55.5 246.0V263.0M59.7 246.0V263.0M63.9 246.0V263.0M68.1 246.0V263.0M53.9 261.5L69.7 247.5M81.5 246.0V263.0M85.7 246.0V263.0M89.9 246.0V263.0M94.1 246.0V263.0M79.9 261.5L95.7 247.5M107.5 246.0V263.0M111.7 246.0V263.0M115.9 246.0V263.0M120.1 246.0V263.0M105.9 261.5L121.7 247.5M133.5 246.0V263.0M137.7 246.0V263.0M141.9 246.0V263.0M146.1 246.0V263.0M131.9 261.5L147.7 247.5M185.5 246.0V263.0M189.7 246.0V263.0M193.9 246.0V263.0M198.1 246.0V263.0M183.9 261.5L199.7 247.5M3.5 276.0V293.0M7.7 276.0V293.0M11.9 276.0V293.0M16.1 276.0V293.0M1.9 291.5L17.7 277.5M29.5 276.0V293.0M33.7 276.0V293.0M37.9 276.0V293.0M42.1 276.0V293.0M27.9 291.5L43.7 277.5M55.5 276.0V293.0M59.7 276.0V293.0M63.9 276.0V293.0M68.1 276.0V293.0M53.9 291.5L69.7 277.5M81.5 276.0V293.0M85.7 276.0V293.0M89.9 276.0V293.0M94.1 276.0V293.0M79.9 291.5L95.7 277.5M107.5 276.0V293.0M111.7 276.0V293.0M115.9 276.0V293.0M120.1 276.0V293.0M105.9 291.5L121.7 277.5M133.5 276.0V293.0M137.7 276.0V293.0M141.9 276.0V293.0M146.1 276.0V293.0M131.9 291.5L147.7 277.5M159.5 276.0V293.0M163.7 276.0V293.0M167.9 276.0V293.0M172.1 276.0V293.0M157.9 291.5L173.7 277.5M185.5 276.0V293.0M189.7 276.0V293.0M193.9 276.0V293.0M198.1 276.0V293.0M183.9 291.5L199.7 277.5M3.5 306.0V323.0M7.7 306.0V323.0M11.9 306.0V323.0M16.1 306.0V323.0M1.9 321.5L17.7 307.5M29.5 306.0V323.0M33.7 306.0V323.0M37.9 306.0V323.0M42.1 306.0V323.0M27.9 321.5L43.7 307.5M81.5 306.0V323.0M85.7 306.0V323.0M89.9 306.0V323.0M94.1 306.0V323.0M79.9 321.5L95.7 307.5M107.5 306.0V323.0M111.7 306.0V323.0M115.9 306.0V323.0M120.1 306.0V323.0M105.9 321.5L121.7 307.5M133.5 306.0V323.0M137.7 306.0V323.0M141.9 306.0V323.0M146.1 306.0V323.0M131.9 321.5L147.7 307.5M159.5 306.0V323.0M163.7 306.0V323.0M167.9 306.0V323.0M172.1 306.0V323.0M157.9 321.5L173.7 307.5M185.5 306.0V323.0M189.7 306.0V323.0M193.9 306.0V323.0M198.1 306.0V323.0M183.9 321.5L199.7 307.5M3.5 336.0V353.0M7.7 336.0V353.0M11.9 336.0V353.0M16.1 336.0V353.0M1.9 351.5L17.7 337.5M29.5 336.0V353.0M33.7 336.0V353.0M37.9 336.0V353.0M42.1 336.0V353.0M27.9 351.5L43.7 337.5M55.5 336.0V353.0M59.7 336.0V353.0M63.9 336.0V353.0M68.1 336.0V353.0M53.9 351.5L69.7 337.5M107.5 336.0V353.0M111.7 336.0V353.0M115.9 336.0V353.0M120.1 336.0V353.0M105.9 351.5L121.7 337.5M133.5 336.0V353.0M137.7 336.0V353.0M141.9 336.0V353.0M146.1 336.0V353.0M131.9 351.5L147.7 337.5M159.5 336.0V353.0M163.7 336.0V353.0M167.9 336.0V353.0M172.1 336.0V353.0M157.9 351.5L173.7 337.5M185.5 336.0V353.0M189.7 336.0V353.0M193.9 336.0V353.0M198.1 336.0V353.0M183.9 351.5L199.7 337.5"/></g><g class="tally-marked" fill="none" stroke-width="1.7" stroke-linecap="round"><path d="M81.5 6.0V23.0M85.7 6.0V23.0M89.9 6.0V23.0M94.1 6.0V23.0M79.9 21.5L95.7 7.5M29.5 36.0V53.0M33.7 36.0V53.0M37.9 36.0V53.0M42.1 36.0V53.0M27.9 51.5L43.7 37.5M159.5 36.0V53.0M163.7 36.0V53.0M167.9 36.0V53.0M172.1 36.0V53.0M157.9 51.5L173.7 37.5M159.5 66.0V83.0M163.7 66.0V83.0M167.9 66.0V83.0M172.1 66.0V83.0M157.9 81.5L173.7 67.5M133.5 96.0V113.0M137.7 96.0V113.0M141.9 96.0V113.0M146.1 96.0V113.0M131.9 111.5L147.7 97.5M133.5 126.0V143.0M137.7 126.0V143.0M141.9 126.0V143.0M146.1 126.0V143.0M131.9 141.5L147.7 127.5M159.5 156.0V173.0M163.7 156.0V173.0M167.9 156.0V173.0M172.1 156.0V173.0M157.9 171.5L173.7 157.5M133.5 186.0V203.0M137.7 186.0V203.0M141.9 186.0V203.0M146.1 186.0V203.0M131.9 201.5L147.7 187.5M133.5 216.0V233.0M137.7 216.0V233.0M141.9 216.0V233.0M146.1 216.0V233.0M131.9 231.5L147.7 217.5M159.5 246.0V263.0M163.7 246.0V263.0M167.9 246.0V263.0M172.1 246.0V263.0M157.9 261.5L173.7 247.5M55.5 306.0V323.0M59.7 306.0V323.0M63.9 306.0V323.0M68.1 306.0V323.0M53.9 321.5L69.7 307.5M81.5 336.0V353.0M85.7 336.0V353.0M89.9 336.0V353.0M94.1 336.0V353.0M79.9 351.5L95.7 337.5"/></g></svg>
+        <p class="tally-note">96 conversations<br><b>12 real resolutions · 12.5%</b></p>
+      </div>
+
+      <p class="lede">
+        Your AI support vendor counts its own billable &ldquo;resolutions.&rdquo;
+        <span class="second">We <strong>recount</strong> them from your own helpdesk data.</span>
+      </p>
+    </div>
   </header>
 
+  <div class="zero-line"></div>
   <section aria-labelledby="case-heading">
     <p class="label" id="case-heading">What a recount finds</p>
     <p class="case">
@@ -347,6 +490,7 @@
     </table>
   </section>
 
+  <div class="zero-line"></div>
   <section aria-labelledby="how-heading">
     <p class="label" id="how-heading">How it works</p>
     <ol class="steps">
@@ -378,6 +522,76 @@
     </ol>
   </section>
 
+  <div class="zero-line"></div>
+  <section aria-labelledby="doc-heading">
+    <p class="label" id="doc-heading">The document you get</p>
+    <p class="doc-intro">
+      The product is this page of paper. Below is a real one, produced by the tool
+      from the sample export that ships with it &mdash; not a mock-up.
+    </p>
+
+    <div class="doc">
+      <div class="doc-inner">
+        <h3>TareCount Settlement Statement (Advisory)</h3>
+        <p class="meta">
+          SOURCE EXPORT: conversations.csv (60 rows, 60 conversations) &middot;
+          $0.99 PER RESOLUTION &middot; 72-HOUR RE-CONTACT WINDOW
+        </p>
+        <hr class="rule-2">
+
+        <p class="block-label">Tier 1 — the vendor&rsquo;s own published rules</p>
+        <table class="stmt">
+          <tbody>
+            <tr><th scope="row">Vendor billed</th><td>49</td><td>$48.51</td></tr>
+            <tr><th scope="row">TareCount recount</th><td>33</td><td>$32.67</td></tr>
+            <tr class="total variance"><th scope="row">Variance</th><td>+16</td><td>$15.84</td></tr>
+          </tbody>
+        </table>
+
+        <p class="block-label">Disputed under Tier 1 — 21 conversations</p>
+        <div class="scroll-x">
+        <table class="stmt wide">
+          <thead>
+            <tr><th scope="col">Conversation</th><th scope="col">Billed</th><th scope="col">Recount</th><th scope="col">Variance</th><th scope="col">Rule that failed</th></tr>
+          </thead>
+          <tbody>
+            <tr class="disputed"><th scope="row">C-1003</th><td>1</td><td>0</td><td>$0.99</td><td>vendor_not_reopened</td></tr>
+            <tr class="disputed"><th scope="row">C-1004</th><td>1</td><td>0</td><td>$0.99</td><td>vendor_not_reopened</td></tr>
+            <tr class="disputed"><th scope="row">C-1010</th><td>1</td><td>0</td><td>$0.99</td><td>vendor_outcome_delivered</td></tr>
+            <tr class="disputed"><th scope="row">C-1014</th><td>1</td><td>0</td><td>$0.99</td><td>vendor_outcome_delivered</td></tr>
+            <tr class="disputed"><th scope="row">C-1020</th><td>1</td><td>0</td><td>$0.99</td><td>vendor_not_reopened</td></tr>
+            <tr><td class="elision" colspan="5">…16 more, each with its line number in your export</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p class="block-label">Tier 2 — ARS-lite, the stricter standard</p>
+        <table class="stmt">
+          <tbody>
+            <tr><th scope="row">Vendor billed</th><td>49</td><td>$48.51</td></tr>
+            <tr><th scope="row">TareCount recount</th><td>25</td><td>$24.75</td></tr>
+            <tr class="total variance"><th scope="row">Variance</th><td>+24</td><td>$23.76</td></tr>
+          </tbody>
+        </table>
+
+        <p class="block-label">Also reported</p>
+        <table class="stmt also">
+          <tbody>
+            <tr><th scope="row">Disputed-gray (vendor rules allow it, ARS does not)</th><td>8</td></tr>
+            <tr><th scope="row">Underbilled, in the vendor&rsquo;s favour</th><td>5</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="doc-foot">
+      Both recounts run, always. Tier 1 leads the negotiation because the vendor
+      cannot argue with their own published rules &mdash; only with the data, which
+      is yours.
+    </p>
+  </section>
+
+  <div class="zero-line"></div>
   <section aria-labelledby="offer-heading">
     <p class="label" id="offer-heading">Engagement</p>
     <div class="offer">
@@ -397,12 +611,17 @@
     </div>
   </section>
 
+  <div class="zero-line"></div>
   <footer>
     <p>
       <span class="unit">TareCount</span><span class="sep">·</span><span
       class="unit">Independent audits of AI support billing</span><span
       class="sep">·</span>Named by both sides or hired by the buyer &mdash;
       never paid by the vendor we check.
+    </p>
+    <p class="fonts">
+      Set in Gloock, Instrument Serif and IBM Plex Mono, served from this site.
+      <a href="fonts/OFL.txt">SIL Open Font License</a>.
     </p>
   </footer>
 
