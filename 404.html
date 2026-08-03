@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nothing here — TareCount</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FBFAF7'/%3E%3Cpath d='M6 22h20M16 22V9M9 13h14' stroke='%2318160F' stroke-width='2' fill='none' stroke-linecap='square'/%3E%3Cpath d='M16 24.5l-3-3.5h6z' fill='%23B0552F'/%3E%3C/svg%3E">
+<style>
+  /* This page is served for any unknown path, so every URL here is
+     root-relative — a relative one would resolve against /whatever/ and
+     the fonts would 404 on the 404. */
+  @font-face {
+    font-family: "Gloock";
+    src: url(/fonts/gloock-latin-400.woff2) format("woff2");
+    font-weight: 400; font-style: normal; font-display: swap;
+    unicode-range: U+0000-00FF;
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    src: url(/fonts/ibmplexmono-latin-400.woff2) format("woff2");
+    font-weight: 400; font-style: normal; font-display: swap;
+    unicode-range: U+0000-00FF;
+  }
+
+  :root {
+    --paper:      #fbfaf7;
+    --ink:        #18160f;
+    --verdict:    #b0552f;
+    --annotation: #7a7468;
+    --display: "Gloock", "Iowan Old Style", Georgia, "Times New Roman", serif;
+    --mono:    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --serif:   "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+    --s1: 0.375rem; --s2: 0.75rem; --s4: 1.75rem; --s5: 2.75rem; --s7: 6rem;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--verdict); color: var(--paper); }
+
+  main {
+    width: 100%;
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: var(--s7) clamp(var(--s4), 6vw, var(--s7));
+    text-align: center;
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.8125rem;
+    color: var(--annotation);
+    margin: 0 0 var(--s4);
+  }
+
+  /* The zero line, as everywhere else: 2px of ink, terracotta pointer. */
+  .zero-line {
+    position: relative;
+    border-top: 2px solid var(--ink);
+    margin: var(--s5) 0 var(--s2);
+  }
+  .zero-line::before {
+    content: "";
+    position: absolute;
+    top: -9px; left: 50%;
+    width: 0; height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 10px solid var(--verdict);
+    transform: translate(-50%, 0);
+  }
+  .zero-line::after {
+    content: "0.00";
+    position: absolute;
+    top: -1.85rem; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--verdict);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 9vw, 3.75rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .said { margin: var(--s4) 0 0; color: var(--annotation); text-wrap: pretty; }
+  .back {
+    display: inline-block;
+    margin-top: var(--s4);
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    color: var(--verdict);
+  }
+  .back:focus-visible { outline: 2px solid var(--verdict); outline-offset: 3px; }
+
+  .foot {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--annotation);
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .zero-line::before {
+      animation: settle 620ms cubic-bezier(.16, .84, .30, 1) both;
+    }
+    @keyframes settle {
+      from { transform: translate(-50%, -7px); opacity: 0; }
+      to   { transform: translate(-50%, 0);    opacity: 1; }
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="label">fig. 00 &mdash; nothing to count</p>
+  <h1>Zero</h1>
+  <p class="said">
+    There is no page at this address. The scale reads what it should read
+    when the pan is empty.
+  </p>
+  <div class="zero-line"></div>
+  <p class="foot">TareCount &middot; Independent audits of AI support billing</p>
+  <a class="back" href="/">&larr; back to tarecount.com</a>
+</main>
+</body>
+</html>

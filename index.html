@@ -7,6 +7,8 @@
 <meta name="description" content="Independent audits of AI support billing. Your AI support vendor counts its own billable resolutions. We recount them from your own helpdesk data.">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FBFAF7'/%3E%3Cpath d='M6 22h20M16 22V9M9 13h14' stroke='%2318160F' stroke-width='2' fill='none' stroke-linecap='square'/%3E%3Cpath d='M16 24.5l-3-3.5h6z' fill='%23B0552F'/%3E%3C/svg%3E">
+<!-- The display face carries the wordmark, which is the first thing read. -->
+<link rel="preload" as="font" type="font/woff2" href="fonts/gloock-latin-400.woff2" crossorigin>
 <meta property="og:title" content="TareCount — Trust, but recount.">
 <meta property="og:description" content="Your AI support vendor counts its own billable resolutions. We recount them from your own helpdesk data.">
 <meta property="og:type" content="website">
@@ -14,8 +16,8 @@
 <style>
   /* ------------------------------------------------------------------
      TareCount — one file. Every byte is served from this repo: three
-     self-hosted OFL families, one inline SVG, no scripts, no requests
-     to anywhere else.
+     self-hosted OFL families, one inline SVG, one inline script, no
+     request to anywhere else.
      ------------------------------------------------------------------ */
 
   /* Wordmark. */
@@ -25,7 +27,7 @@
     font-weight: 400; font-style: normal; font-display: swap;
     unicode-range: U+0000-00FF;
   }
-  /* Tagline and asides. */
+  /* The one italic sentence. */
   @font-face {
     font-family: "Instrument Serif";
     src: url(fonts/instrumentserif-latin-400italic.woff2) format("woff2");
@@ -46,19 +48,43 @@
     unicode-range: U+0000-00FF;
   }
 
-  /* BRAND.md v1.0 — five colours, and no sixth. Verdict-terracotta is earned:
-     disputed items, the pointer, the tagline, links, the CTA. Nothing else. */
   :root {
+    /* BRAND.md v1.0 — five colours, and no sixth. Verdict-terracotta is
+       earned: disputed items, the pointer, the tagline, links, the CTA. */
     --paper:      #fbfaf7;
     --ink:        #18160f;
     --verdict:    #b0552f;
     --annotation: #7a7468;
     --hairline:   #e4e0d6;
+    /* Paper laid on paper: ink at 2%, not a sixth hue. */
+    --paper-2:    rgba(24, 22, 15, 0.022);
 
     --display: "Gloock", "Iowan Old Style", Georgia, "Times New Roman", serif;
     --italic:  "Instrument Serif", Georgia, "Times New Roman", serif;
     --mono:    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     --serif:   "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+
+    /* One spacing scale. Every margin and pad below is a step on it —
+       there are no ad-hoc values past this point. */
+    --s1: 0.375rem;
+    --s2: 0.75rem;
+    --s3: 1.125rem;
+    --s4: 1.75rem;
+    --s5: 2.75rem;
+    --s6: 4rem;
+    --s7: 6rem;
+
+    /* One type scale. */
+    --t-micro: 0.6875rem;
+    --t-small: 0.8125rem;
+    --t-mono:  0.875rem;
+    --t-body:  1.0625rem;
+    --t-lead:  1.1875rem;
+    --t-lede:  clamp(1.375rem, 3.7vw, 1.875rem);
+    --t-fig:   clamp(1.5rem, 4vw, 2rem);
+    --t-tag:   clamp(1.5rem, 4.8vw, 2.25rem);
+    --t-word:  clamp(3.5rem, 13vw, 7rem);
+
     color-scheme: light;
   }
 
@@ -71,22 +97,30 @@
     color: var(--ink);
     font-family: var(--serif);
     font-size: 17px;
-    line-height: 1.6;
+    line-height: 1.62;
     font-kerning: normal;
     -webkit-font-smoothing: antialiased;
   }
 
+  ::selection { background: var(--verdict); color: var(--paper); }
+
+  a { color: var(--verdict); }
+  a:focus-visible,
+  .cta:focus-visible {
+    outline: 2px solid var(--verdict);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
   .sheet {
-    max-width: 52rem;
+    max-width: 54rem;
     margin: 0 auto;
-    padding: clamp(2rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 3.5rem) 0;
+    padding: var(--s6) clamp(var(--s3), 5vw, var(--s7)) 0;
   }
 
   /* ------------------------- the zero line --------------------------
      BRAND.md: a single 2–3px ink rule with a small pointer triangle.
-     The pointer is centred and sits on the line, as on the brand sheet —
-     it is the mark a scale is zeroed against, and it is the one place
-     besides a verdict where terracotta is spent.
+     The pointer is centred and sits on the line, as on the brand sheet.
      ------------------------------------------------------------------ */
   .zero-line {
     position: relative;
@@ -97,65 +131,65 @@
     position: absolute;
     top: -9px;
     left: 50%;
-    transform: translateX(-50%);
     width: 0; height: 0;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
     border-top: 10px solid var(--verdict);
+    transform: translateX(-50%);
   }
-  .zero-line.reading { margin-top: 2.6rem; }
+  .zero-line.reading { margin-top: var(--s5); }
   /* fig. 02 on the sheet: the zero reading above the pointer. */
   .zero-line.reading::after {
     content: "0.00";
     position: absolute;
-    top: -1.75rem;
+    top: -1.85rem;
     left: 50%;
     transform: translateX(-50%);
     font-family: var(--mono);
-    font-size: 0.6875rem;
+    font-size: var(--t-micro);
+    font-variant-numeric: tabular-nums;
     color: var(--verdict);
   }
 
-  section { padding: clamp(2.25rem, 5vw, 3.25rem) 0; }
+  section { padding: var(--s6) 0; }
 
   /* fig. numbering — BRAND.md allows `fig. 01 —` mono labels. Restrained,
      lower case, annotation grey, exactly as they are set on the sheet. */
   .label {
     font-family: var(--mono);
-    font-size: 0.75rem;
-    font-weight: 400;
+    font-size: var(--t-small);
     letter-spacing: 0.01em;
     color: var(--annotation);
-    margin: 0 0 1.15rem;
+    margin: 0 0 var(--s4);
   }
-  /* The caption row under a zero line: figure on the left, count on the right. */
+  /* The caption row under a zero line: figure left, count right. */
   .fig-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 0.35rem 1.5rem;
+    gap: var(--s1) var(--s4);
     font-family: var(--mono);
-    font-size: 0.75rem;
+    font-size: var(--t-small);
     color: var(--annotation);
-    margin: 0.65rem 0 0;
+    margin: var(--s2) 0 0;
   }
   .fig-row .count { font-variant-numeric: tabular-nums; }
 
   /* ---------------------------- masthead ---------------------------- */
 
-  header { padding-bottom: clamp(2.25rem, 5vw, 3.25rem); }
+  header { padding-bottom: var(--s6); }
 
   /* The masthead is the top of the brand sheet: the tally field, the zero
      line reading 0.00, then the wordmark block centred beneath it. */
   .masthead {
     text-align: center;
-    margin-top: clamp(2rem, 5vw, 3rem);
+    margin-top: var(--s7);
   }
 
   .wordmark {
     font-family: var(--display);
-    font-size: clamp(3.25rem, 12vw, 6rem);
-    line-height: 0.95;
+    font-size: var(--t-word);
+    line-height: 0.92;
     letter-spacing: -0.005em;
     font-weight: 400;
     margin: 0;
@@ -165,52 +199,56 @@
   .tagline {
     font-family: var(--italic);
     font-style: italic;
-    font-size: clamp(1.375rem, 4.4vw, 2rem);
+    font-size: var(--t-tag);
     line-height: 1.2;
     color: var(--verdict);
-    margin: 0.5rem 0 0;
+    margin: var(--s2) 0 0;
   }
 
   /* Lore line — mono, not italic: the tagline has spent the page's italic. */
   .definition {
     font-family: var(--mono);
-    font-size: clamp(0.8125rem, 2.4vw, 0.9375rem);
+    font-size: clamp(var(--t-small), 2.4vw, 0.9375rem);
     color: var(--annotation);
-    margin: 1.15rem 0 0;
+    margin: var(--s4) 0 0;
   }
 
   .lede {
-    font-size: clamp(1.3125rem, 3.6vw, 1.75rem);
-    line-height: 1.38;
+    font-size: var(--t-lede);
+    line-height: 1.36;
     letter-spacing: -0.011em;
-    margin: clamp(2.25rem, 5vw, 3rem) auto 0;
+    margin: var(--s6) auto 0;
     max-width: 30ch;
     text-wrap: balance;
   }
-  .lede .second { display: block; margin-top: 0.45rem; }
+  .lede .second { display: block; margin-top: var(--s1); }
   .lede .second strong { font-weight: 600; }
 
   /* --------------------------- tally field ---------------------------
      fig. 01. 96 groups, 12 struck: 12.5%. The plain marks are ink held
-     back to a texture — the ticket asked for subtle, and BRAND.md allows
-     no sixth colour to make them grey with.
+     back to a texture — BRAND.md allows no sixth colour to grey them with.
+
+     Every group is one <path pathLength="1">, so a single dasharray draws
+     any of them. This is the finished state: the field is complete and
+     correct with no script, no animation, and no support for either.
      ------------------------------------------------------------------ */
   .tally { display: block; width: 100%; height: auto; }
-  .tally-plain  { stroke: var(--ink); opacity: 0.75; }
-  .tally-marked { stroke: var(--verdict); }
+  .tally g { fill: none; stroke-linecap: round; }
+  .tally-plain  { stroke: var(--ink); opacity: 0.75; stroke-width: 1.9; }
+  .tally-marked { stroke: var(--verdict); stroke-width: 2.1; }
 
   /* ------------------------- the case / proof ------------------------ */
 
-  .case { font-size: 1.0625rem; line-height: 1.62; margin: 0; max-width: 60ch; }
+  .case { font-size: var(--t-body); margin: 0; max-width: 60ch; }
   .case q { quotes: "\201C" "\201D"; }
 
   .ledger {
     width: 100%;
     border-collapse: collapse;
-    margin: 1.9rem 0 0;
+    margin: var(--s5) 0 0;
   }
   .ledger th, .ledger td {
-    padding: 0.62rem 0;
+    padding: var(--s2) 0;
     border-bottom: 1px solid var(--hairline);
     vertical-align: baseline;
   }
@@ -218,7 +256,7 @@
   .ledger th {
     text-align: left;
     font-family: var(--mono);
-    font-size: 0.75rem;
+    font-size: var(--t-small);
     font-weight: 400;
     letter-spacing: 0.02em;
     color: var(--annotation);
@@ -226,10 +264,10 @@
   .ledger td {
     text-align: right;
     font-family: var(--mono);
-    font-size: 1.375rem;
+    font-size: var(--t-fig);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
-    padding-left: 1rem;
+    padding-left: var(--s3);
   }
   .ledger .recount td { color: var(--verdict); font-weight: 600; }
   .ledger .recount th { color: var(--ink); }
@@ -240,9 +278,9 @@
   ol.steps li {
     counter-increment: step;
     display: grid;
-    grid-template-columns: 3.25rem 1fr;
-    gap: 0 1rem;
-    padding: 1.15rem 0;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 0 var(--s3);
+    padding: var(--s4) 0;
     border-bottom: 1px solid var(--hairline);
   }
   ol.steps li:first-child { padding-top: 0; }
@@ -251,34 +289,40 @@
   ol.steps li::before {
     content: "0" counter(step);
     font-family: var(--mono);
-    font-size: 0.8125rem;
+    font-size: var(--t-small);
     color: var(--annotation);
     padding-top: 0.4rem;
     font-variant-numeric: tabular-nums;
   }
-  .steps h3 { font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.008em; margin: 0 0 0.25rem; }
-  .steps p { margin: 0; color: var(--annotation); font-size: 1rem; line-height: 1.58; }
+  .steps h3 {
+    font-size: var(--t-lead);
+    font-weight: 600;
+    letter-spacing: -0.008em;
+    margin: 0 0 var(--s1);
+  }
+  .steps p { margin: 0; color: var(--annotation); line-height: 1.58; }
   .steps .detail {
-    margin-top: 0.55rem;
-    padding-left: 0.9rem;
+    margin-top: var(--s2);
+    padding-left: var(--s2);
     border-left: 1px solid var(--hairline);
     font-size: 0.9375rem;
-    line-height: 1.6;
     color: var(--annotation);
   }
 
-  /* --------------------- the document you get ----------------------- */
+  /* --------------------- the document you get -----------------------
+     Paper laid on paper: a hairline and a 2% ink wash. No shadow.
+     ------------------------------------------------------------------ */
 
-  .doc-intro { margin: 0 0 1.5rem; color: var(--annotation); max-width: 60ch; text-wrap: pretty; }
+  .doc-intro { margin: 0 0 var(--s4); color: var(--annotation); max-width: 60ch; text-wrap: pretty; }
 
-  /* Hairline border, no fill: a tinted panel would be a sixth colour. */
   .doc {
     border: 1px solid var(--hairline);
-    padding: clamp(1.1rem, 3.2vw, 1.9rem);
+    background: var(--paper-2);
+    padding: clamp(var(--s3), 3.2vw, var(--s5));
   }
   .doc-inner {
     font-family: var(--mono);
-    font-size: 0.8125rem;
+    font-size: var(--t-small);
     line-height: 1.75;
     font-variant-numeric: tabular-nums;
   }
@@ -289,36 +333,36 @@
   table.stmt.wide { min-width: 27rem; }
   /* Two long labels and a count — the label wraps rather than pushing the
      count off a narrow screen. */
-  table.stmt.also th { white-space: normal; padding-right: 1.25rem; }
+  table.stmt.also th { white-space: normal; padding-right: var(--s3); }
   table.stmt.also td { width: 1%; }
   .doc h3 {
     font-family: var(--display);
-    font-size: 1.25rem;
+    font-size: var(--t-lead);
     font-weight: 400;
     letter-spacing: 0;
-    margin: 0 0 0.15rem;
+    margin: 0 0 var(--s1);
   }
-  .doc .meta { color: var(--annotation); margin: 0 0 1.35rem; font-size: 0.75rem; }
-  .doc .rule-2 { border: 0; border-top: 2px solid var(--ink); margin: 0 0 1.1rem; }
+  .doc .meta { color: var(--annotation); margin: 0 0 var(--s3); font-size: var(--t-small); }
+  .doc .rule-2 { border: 0; border-top: 2px solid var(--ink); margin: 0 0 var(--s3); }
   .doc .block-label {
     font-weight: 600;
     letter-spacing: 0.09em;
     text-transform: uppercase;
-    font-size: 0.6875rem;
+    font-size: var(--t-micro);
     color: var(--annotation);
-    margin: 1.5rem 0 0.5rem;
+    margin: var(--s4) 0 var(--s2);
   }
   .doc .block-label:first-of-type { margin-top: 0; }
 
   table.stmt { width: 100%; border-collapse: collapse; }
-  table.stmt th, table.stmt td { padding: 0.15rem 0.9rem 0.15rem 0; text-align: right; white-space: nowrap; }
+  table.stmt th, table.stmt td { padding: 0.15rem var(--s2) 0.15rem 0; text-align: right; white-space: nowrap; }
   table.stmt th:first-child, table.stmt td:first-child { text-align: left; }
   table.stmt td:last-child, table.stmt th:last-child { padding-right: 0; }
   table.stmt thead th {
     font-weight: 400;
     color: var(--annotation);
     border-bottom: 1px solid var(--hairline);
-    padding-bottom: 0.3rem;
+    padding-bottom: var(--s1);
   }
   table.stmt thead th:last-child { text-align: left; }
   table.stmt td:last-child { text-align: left; white-space: normal; }
@@ -329,12 +373,12 @@
   }
   table.stmt .variance td, table.stmt .variance th { color: var(--verdict); }
   table.stmt tr.disputed td, table.stmt tr.disputed th { color: var(--verdict); }
-  .doc .elision { color: var(--annotation); padding-top: 0.35rem; }
+  .doc .elision { color: var(--annotation); padding-top: var(--s1); }
 
   .doc-foot {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: var(--annotation);
-    margin: 1.15rem 0 0;
+    margin: var(--s3) 0 0;
     max-width: 62ch;
     text-wrap: pretty;
   }
@@ -343,41 +387,41 @@
 
   .offer {
     border: 1px solid var(--hairline);
-    padding: clamp(1.5rem, 4vw, 2.25rem);
+    padding: clamp(var(--s4), 4vw, var(--s5));
     margin: 0;
   }
   .offer dl {
     margin: 0;
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 0.55rem 1.25rem;
+    gap: var(--s2) var(--s3);
     align-items: baseline;
   }
-  .offer dt { font-size: 1.0625rem; line-height: 1.45; }
+  .offer dt { font-size: var(--t-body); line-height: 1.45; }
   .offer dd {
     margin: 0;
     text-align: right;
     font-family: var(--mono);
-    font-size: 1.0625rem;
+    font-size: var(--t-body);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
   .offer .price { font-weight: 600; }
   /* Ink, not verdict — a price is not a finding. */
   .offer .free {
-    font-size: 0.8125rem;
+    font-size: var(--t-small);
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
-  .offer hr { grid-column: 1 / -1; border: 0; border-top: 1px solid var(--hairline); margin: 0.35rem 0; }
+  .offer hr { grid-column: 1 / -1; border: 0; border-top: 1px solid var(--hairline); margin: var(--s1) 0; }
 
   .cta-row {
-    margin-top: 1.9rem;
+    margin-top: var(--s5);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1rem 1.35rem;
+    gap: var(--s3) var(--s4);
   }
   /* BRAND.md spends verdict on links and the CTA. This is the CTA. */
   .cta {
@@ -385,25 +429,24 @@
     background: var(--verdict);
     color: var(--paper);
     font-family: var(--mono);
-    font-size: 0.875rem;
+    font-size: var(--t-mono);
     font-weight: 600;
     letter-spacing: 0.02em;
     text-decoration: none;
-    padding: 0.95rem 1.6rem;
+    padding: var(--s3) var(--s4);
     border: 1px solid var(--verdict);
   }
   .cta:hover, .cta:focus-visible { background: var(--ink); border-color: var(--ink); }
-  .cta:focus-visible { outline: 2px solid var(--verdict); outline-offset: 3px; }
-  .cta-note { font-family: var(--mono); font-size: 0.8125rem; color: var(--annotation); margin: 0; }
+  .cta-note { font-family: var(--mono); font-size: var(--t-small); color: var(--annotation); margin: 0; }
   .cta-note a { color: inherit; }
 
   /* ----------------------------- footer ----------------------------- */
 
   footer {
-    margin-top: clamp(1.5rem, 4vw, 2.25rem);
-    padding: 1.4rem 0 clamp(2.5rem, 6vw, 4rem);
+    margin-top: var(--s4);
+    padding: var(--s4) 0 var(--s7);
     font-family: var(--mono);
-    font-size: 0.75rem;
+    font-size: var(--t-small);
     line-height: 1.85;
     color: var(--annotation);
   }
@@ -412,42 +455,117 @@
   footer .colophon {
     letter-spacing: 0.13em;
     text-transform: uppercase;
-    font-size: 0.6875rem;
+    font-size: var(--t-micro);
   }
-  footer .neutrality { margin-top: 0.5rem; }
+  footer .neutrality { margin-top: var(--s1); }
   footer .sep { padding: 0 0.5em; }
   footer .unit { white-space: nowrap; }
-  footer .fonts { margin-top: 0.9rem; font-size: 0.6875rem; }
+  footer .fonts { margin-top: var(--s2); font-size: var(--t-micro); }
   footer .fonts a { color: inherit; }
-
-  a { color: var(--verdict); }
 
   /* ---------------------------- narrow ------------------------------ */
 
   @media (max-width: 40rem) {
     footer .unit { white-space: normal; }
-    /* The count reads as two lines rather than crushing against the figure. */
+    /* The count reads as its own line rather than crushing against the figure. */
     .fig-row { justify-content: flex-start; }
+    .masthead { margin-top: var(--s5); }
+    section { padding: var(--s5) 0; }
+    header { padding-bottom: var(--s5); }
   }
   @media (max-width: 34rem) {
     ol.steps li { grid-template-columns: 1fr; gap: 0; }
-    ol.steps li::before { display: block; padding: 0 0 0.35rem; }
+    ol.steps li::before { display: block; padding: 0 0 var(--s1); }
     .offer dl { grid-template-columns: 1fr; }
     .offer dd { text-align: left; }
     .cta { display: block; text-align: center; }
-    .doc-inner { font-size: 0.6875rem; }
-    .doc h3 { font-size: 1.0625rem; }
-    table.stmt th, table.stmt td { padding-right: 0.6rem; }
+    .doc-inner { font-size: var(--t-micro); }
+    table.stmt th, table.stmt td { padding-right: var(--s1); }
   }
 
-  @media print {
-    body { background: #fff; font-size: 11pt; }
-    .cta { background: #fff; color: #000; }
-    section { break-inside: avoid; }
-  }
+  /* ----------------------------- motion -----------------------------
+     Everything above is the finished page. Nothing here changes what is
+     on it — only how it arrives. A browser without animation support, or
+     a reader who has asked for no motion, gets all of it at once.
+     ------------------------------------------------------------------ */
 
   @media (prefers-reduced-motion: no-preference) {
-    html { scroll-behavior: smooth; }
+
+    /* fig. 01 draws itself in reading order: 12ms between groups, each
+       group taking 520ms over its five strokes — four uprights, then the
+       one struck across. */
+    .tally path {
+      stroke-dasharray: 1;
+      animation: draw 520ms linear both;
+      animation-delay: calc(var(--i) * 12ms);
+    }
+    @keyframes draw {
+      from { stroke-dashoffset: 1; }
+      to   { stroke-dashoffset: 0; }
+    }
+
+    /* The 12 disputed groups ignite once the whole field is down —
+       96 × 12ms + 520ms ≈ 1.67s — one every 55ms, in reading order. */
+    .tally-marked path {
+      animation: draw 520ms linear both, ignite 260ms linear both;
+      animation-delay: calc(var(--i) * 12ms), calc(1720ms + var(--j) * 55ms);
+    }
+    @keyframes ignite {
+      from { stroke: var(--ink); opacity: 0.75; }
+      to   { stroke: var(--verdict); opacity: 1; }
+    }
+
+    /* A pointer settles onto its rule as the line comes into view: down,
+       decelerating, stopping there. It never travels past the line and
+       springs back — a needle coming to rest, not a bounce. */
+    .zero-line::before {
+      transform: translate(-50%, -7px);
+      opacity: 0;
+      transition: transform 620ms cubic-bezier(.16, .84, .30, 1), opacity 380ms linear;
+    }
+    .zero-line.settled::before {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+    /* The reading appears once the needle has come to rest. */
+    .zero-line.reading::after {
+      opacity: 0;
+      transition: opacity 520ms linear 340ms;
+    }
+    .zero-line.reading.settled::after { opacity: 1; }
+
+    /* The CTA's hover fade. A colour change is not vestibular motion, but
+       "full static fallback" is easier to certify than to argue. */
+    .cta { transition: background-color 140ms linear, border-color 140ms linear; }
+  }
+
+  /* --------------------------- printing -----------------------------
+     Cmd+P gives a one-pager: the recount, what it finds, the offer, the
+     address. The tally field, the dispute table and the motion layer are
+     screen furniture and come out.
+     ------------------------------------------------------------------ */
+  @media print {
+    :root { --paper: #fff; --paper-2: transparent; }
+    body { background: #fff; font-size: 10pt; line-height: 1.45; }
+    .sheet { max-width: none; padding: 0; }
+    .tally, .fig-row, .doc .scroll-x, .doc-foot, .cta, footer .fonts,
+    .label, .steps .detail { display: none; }
+    header { padding-bottom: var(--s3); }
+    .masthead { margin-top: 0; text-align: left; }
+    .wordmark { font-size: 30pt; }
+    .tagline { font-size: 13pt; margin-top: 0; }
+    .definition { margin-top: var(--s1); }
+    .lede { font-size: 12pt; margin: var(--s3) 0 0; max-width: none; }
+    section { padding: var(--s3) 0; break-inside: avoid; }
+    .zero-line { border-top-width: 1.5pt; margin-top: 0; }
+    .zero-line::before, .zero-line::after { display: none; }
+    .doc { border-color: #999; }
+    .ledger { margin-top: var(--s3); }
+    .ledger td { font-size: 14pt; }
+    .cta-row { margin-top: var(--s3); }
+    .cta-note { font-size: 10pt; color: #000; }
+    a { text-decoration: none; }
+    footer { padding: var(--s3) 0 0; margin-top: var(--s3); }
   }
 </style>
 </head>
@@ -456,7 +574,7 @@
 
   <header>
     <p class="label">fig. 01 &mdash; the recount</p>
-    <svg class="tally" viewBox="0 0 312 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ninety-six tally groups, twelve of them struck as disputed — 12.5 percent."><g class="tally-plain" fill="none" stroke-width="1.9" stroke-linecap="round"><path d="M3.4 24.0L5.4 6.0M7.7 24.0L9.7 6.0M12.0 24.0L14.0 6.0M16.3 24.0L18.3 6.0M1.4 22.0L20.7 8.0M29.4 24.0L31.4 6.0M33.7 24.0L35.7 6.0M38.0 24.0L40.0 6.0M42.3 24.0L44.3 6.0M27.4 22.0L46.7 8.0M55.4 24.0L57.4 6.0M59.7 24.0L61.7 6.0M64.0 24.0L66.0 6.0M68.3 24.0L70.3 6.0M53.4 22.0L72.7 8.0M81.4 24.0L83.4 6.0M85.7 24.0L87.7 6.0M90.0 24.0L92.0 6.0M94.3 24.0L96.3 6.0M79.4 22.0L98.7 8.0M107.4 24.0L109.4 6.0M111.7 24.0L113.7 6.0M116.0 24.0L118.0 6.0M120.3 24.0L122.3 6.0M105.4 22.0L124.7 8.0M133.4 24.0L135.4 6.0M137.7 24.0L139.7 6.0M142.0 24.0L144.0 6.0M146.3 24.0L148.3 6.0M131.4 22.0L150.7 8.0M159.4 24.0L161.4 6.0M163.7 24.0L165.7 6.0M168.0 24.0L170.0 6.0M172.3 24.0L174.3 6.0M157.4 22.0L176.7 8.0M185.4 24.0L187.4 6.0M189.7 24.0L191.7 6.0M194.0 24.0L196.0 6.0M198.3 24.0L200.3 6.0M183.4 22.0L202.7 8.0M211.4 24.0L213.4 6.0M215.7 24.0L217.7 6.0M220.0 24.0L222.0 6.0M224.3 24.0L226.3 6.0M209.4 22.0L228.7 8.0M237.4 24.0L239.4 6.0M241.7 24.0L243.7 6.0M246.0 24.0L248.0 6.0M250.3 24.0L252.3 6.0M235.4 22.0L254.7 8.0M263.4 24.0L265.4 6.0M267.7 24.0L269.7 6.0M272.0 24.0L274.0 6.0M276.3 24.0L278.3 6.0M261.4 22.0L280.7 8.0M289.4 24.0L291.4 6.0M293.7 24.0L295.7 6.0M298.0 24.0L300.0 6.0M302.3 24.0L304.3 6.0M287.4 22.0L306.7 8.0M29.4 54.0L31.4 36.0M33.7 54.0L35.7 36.0M38.0 54.0L40.0 36.0M42.3 54.0L44.3 36.0M27.4 52.0L46.7 38.0M55.4 54.0L57.4 36.0M59.7 54.0L61.7 36.0M64.0 54.0L66.0 36.0M68.3 54.0L70.3 36.0M53.4 52.0L72.7 38.0M81.4 54.0L83.4 36.0M85.7 54.0L87.7 36.0M90.0 54.0L92.0 36.0M94.3 54.0L96.3 36.0M79.4 52.0L98.7 38.0M107.4 54.0L109.4 36.0M111.7 54.0L113.7 36.0M116.0 54.0L118.0 36.0M120.3 54.0L122.3 36.0M105.4 52.0L124.7 38.0M133.4 54.0L135.4 36.0M137.7 54.0L139.7 36.0M142.0 54.0L144.0 36.0M146.3 54.0L148.3 36.0M131.4 52.0L150.7 38.0M159.4 54.0L161.4 36.0M163.7 54.0L165.7 36.0M168.0 54.0L170.0 36.0M172.3 54.0L174.3 36.0M157.4 52.0L176.7 38.0M185.4 54.0L187.4 36.0M189.7 54.0L191.7 36.0M194.0 54.0L196.0 36.0M198.3 54.0L200.3 36.0M183.4 52.0L202.7 38.0M211.4 54.0L213.4 36.0M215.7 54.0L217.7 36.0M220.0 54.0L222.0 36.0M224.3 54.0L226.3 36.0M209.4 52.0L228.7 38.0M237.4 54.0L239.4 36.0M241.7 54.0L243.7 36.0M246.0 54.0L248.0 36.0M250.3 54.0L252.3 36.0M235.4 52.0L254.7 38.0M263.4 54.0L265.4 36.0M267.7 54.0L269.7 36.0M272.0 54.0L274.0 36.0M276.3 54.0L278.3 36.0M261.4 52.0L280.7 38.0M29.4 84.0L31.4 66.0M33.7 84.0L35.7 66.0M38.0 84.0L40.0 66.0M42.3 84.0L44.3 66.0M27.4 82.0L46.7 68.0M55.4 84.0L57.4 66.0M59.7 84.0L61.7 66.0M64.0 84.0L66.0 66.0M68.3 84.0L70.3 66.0M53.4 82.0L72.7 68.0M81.4 84.0L83.4 66.0M85.7 84.0L87.7 66.0M90.0 84.0L92.0 66.0M94.3 84.0L96.3 66.0M79.4 82.0L98.7 68.0M107.4 84.0L109.4 66.0M111.7 84.0L113.7 66.0M116.0 84.0L118.0 66.0M120.3 84.0L122.3 66.0M105.4 82.0L124.7 68.0M133.4 84.0L135.4 66.0M137.7 84.0L139.7 66.0M142.0 84.0L144.0 66.0M146.3 84.0L148.3 66.0M131.4 82.0L150.7 68.0M159.4 84.0L161.4 66.0M163.7 84.0L165.7 66.0M168.0 84.0L170.0 66.0M172.3 84.0L174.3 66.0M157.4 82.0L176.7 68.0M185.4 84.0L187.4 66.0M189.7 84.0L191.7 66.0M194.0 84.0L196.0 66.0M198.3 84.0L200.3 66.0M183.4 82.0L202.7 68.0M211.4 84.0L213.4 66.0M215.7 84.0L217.7 66.0M220.0 84.0L222.0 66.0M224.3 84.0L226.3 66.0M209.4 82.0L228.7 68.0M237.4 84.0L239.4 66.0M241.7 84.0L243.7 66.0M246.0 84.0L248.0 66.0M250.3 84.0L252.3 66.0M235.4 82.0L254.7 68.0M263.4 84.0L265.4 66.0M267.7 84.0L269.7 66.0M272.0 84.0L274.0 66.0M276.3 84.0L278.3 66.0M261.4 82.0L280.7 68.0M289.4 84.0L291.4 66.0M293.7 84.0L295.7 66.0M298.0 84.0L300.0 66.0M302.3 84.0L304.3 66.0M287.4 82.0L306.7 68.0M3.4 114.0L5.4 96.0M7.7 114.0L9.7 96.0M12.0 114.0L14.0 96.0M16.3 114.0L18.3 96.0M1.4 112.0L20.7 98.0M29.4 114.0L31.4 96.0M33.7 114.0L35.7 96.0M38.0 114.0L40.0 96.0M42.3 114.0L44.3 96.0M27.4 112.0L46.7 98.0M81.4 114.0L83.4 96.0M85.7 114.0L87.7 96.0M90.0 114.0L92.0 96.0M94.3 114.0L96.3 96.0M79.4 112.0L98.7 98.0M107.4 114.0L109.4 96.0M111.7 114.0L113.7 96.0M116.0 114.0L118.0 96.0M120.3 114.0L122.3 96.0M105.4 112.0L124.7 98.0M133.4 114.0L135.4 96.0M137.7 114.0L139.7 96.0M142.0 114.0L144.0 96.0M146.3 114.0L148.3 96.0M131.4 112.0L150.7 98.0M159.4 114.0L161.4 96.0M163.7 114.0L165.7 96.0M168.0 114.0L170.0 96.0M172.3 114.0L174.3 96.0M157.4 112.0L176.7 98.0M185.4 114.0L187.4 96.0M189.7 114.0L191.7 96.0M194.0 114.0L196.0 96.0M198.3 114.0L200.3 96.0M183.4 112.0L202.7 98.0M211.4 114.0L213.4 96.0M215.7 114.0L217.7 96.0M220.0 114.0L222.0 96.0M224.3 114.0L226.3 96.0M209.4 112.0L228.7 98.0M237.4 114.0L239.4 96.0M241.7 114.0L243.7 96.0M246.0 114.0L248.0 96.0M250.3 114.0L252.3 96.0M235.4 112.0L254.7 98.0M263.4 114.0L265.4 96.0M267.7 114.0L269.7 96.0M272.0 114.0L274.0 96.0M276.3 114.0L278.3 96.0M261.4 112.0L280.7 98.0M289.4 114.0L291.4 96.0M293.7 114.0L295.7 96.0M298.0 114.0L300.0 96.0M302.3 114.0L304.3 96.0M287.4 112.0L306.7 98.0M3.4 144.0L5.4 126.0M7.7 144.0L9.7 126.0M12.0 144.0L14.0 126.0M16.3 144.0L18.3 126.0M1.4 142.0L20.7 128.0M29.4 144.0L31.4 126.0M33.7 144.0L35.7 126.0M38.0 144.0L40.0 126.0M42.3 144.0L44.3 126.0M27.4 142.0L46.7 128.0M55.4 144.0L57.4 126.0M59.7 144.0L61.7 126.0M64.0 144.0L66.0 126.0M68.3 144.0L70.3 126.0M53.4 142.0L72.7 128.0M81.4 144.0L83.4 126.0M85.7 144.0L87.7 126.0M90.0 144.0L92.0 126.0M94.3 144.0L96.3 126.0M79.4 142.0L98.7 128.0M107.4 144.0L109.4 126.0M111.7 144.0L113.7 126.0M116.0 144.0L118.0 126.0M120.3 144.0L122.3 126.0M105.4 142.0L124.7 128.0M133.4 144.0L135.4 126.0M137.7 144.0L139.7 126.0M142.0 144.0L144.0 126.0M146.3 144.0L148.3 126.0M131.4 142.0L150.7 128.0M159.4 144.0L161.4 126.0M163.7 144.0L165.7 126.0M168.0 144.0L170.0 126.0M172.3 144.0L174.3 126.0M157.4 142.0L176.7 128.0M185.4 144.0L187.4 126.0M189.7 144.0L191.7 126.0M194.0 144.0L196.0 126.0M198.3 144.0L200.3 126.0M183.4 142.0L202.7 128.0M211.4 144.0L213.4 126.0M215.7 144.0L217.7 126.0M220.0 144.0L222.0 126.0M224.3 144.0L226.3 126.0M209.4 142.0L228.7 128.0M263.4 144.0L265.4 126.0M267.7 144.0L269.7 126.0M272.0 144.0L274.0 126.0M276.3 144.0L278.3 126.0M261.4 142.0L280.7 128.0M29.4 174.0L31.4 156.0M33.7 174.0L35.7 156.0M38.0 174.0L40.0 156.0M42.3 174.0L44.3 156.0M27.4 172.0L46.7 158.0M55.4 174.0L57.4 156.0M59.7 174.0L61.7 156.0M64.0 174.0L66.0 156.0M68.3 174.0L70.3 156.0M53.4 172.0L72.7 158.0M81.4 174.0L83.4 156.0M85.7 174.0L87.7 156.0M90.0 174.0L92.0 156.0M94.3 174.0L96.3 156.0M79.4 172.0L98.7 158.0M107.4 174.0L109.4 156.0M111.7 174.0L113.7 156.0M116.0 174.0L118.0 156.0M120.3 174.0L122.3 156.0M105.4 172.0L124.7 158.0M159.4 174.0L161.4 156.0M163.7 174.0L165.7 156.0M168.0 174.0L170.0 156.0M172.3 174.0L174.3 156.0M157.4 172.0L176.7 158.0M185.4 174.0L187.4 156.0M189.7 174.0L191.7 156.0M194.0 174.0L196.0 156.0M198.3 174.0L200.3 156.0M183.4 172.0L202.7 158.0M211.4 174.0L213.4 156.0M215.7 174.0L217.7 156.0M220.0 174.0L222.0 156.0M224.3 174.0L226.3 156.0M209.4 172.0L228.7 158.0M237.4 174.0L239.4 156.0M241.7 174.0L243.7 156.0M246.0 174.0L248.0 156.0M250.3 174.0L252.3 156.0M235.4 172.0L254.7 158.0M263.4 174.0L265.4 156.0M267.7 174.0L269.7 156.0M272.0 174.0L274.0 156.0M276.3 174.0L278.3 156.0M261.4 172.0L280.7 158.0M3.4 204.0L5.4 186.0M7.7 204.0L9.7 186.0M12.0 204.0L14.0 186.0M16.3 204.0L18.3 186.0M1.4 202.0L20.7 188.0M29.4 204.0L31.4 186.0M33.7 204.0L35.7 186.0M38.0 204.0L40.0 186.0M42.3 204.0L44.3 186.0M27.4 202.0L46.7 188.0M55.4 204.0L57.4 186.0M59.7 204.0L61.7 186.0M64.0 204.0L66.0 186.0M68.3 204.0L70.3 186.0M53.4 202.0L72.7 188.0M107.4 204.0L109.4 186.0M111.7 204.0L113.7 186.0M116.0 204.0L118.0 186.0M120.3 204.0L122.3 186.0M105.4 202.0L124.7 188.0M133.4 204.0L135.4 186.0M137.7 204.0L139.7 186.0M142.0 204.0L144.0 186.0M146.3 204.0L148.3 186.0M131.4 202.0L150.7 188.0M185.4 204.0L187.4 186.0M189.7 204.0L191.7 186.0M194.0 204.0L196.0 186.0M198.3 204.0L200.3 186.0M183.4 202.0L202.7 188.0M237.4 204.0L239.4 186.0M241.7 204.0L243.7 186.0M246.0 204.0L248.0 186.0M250.3 204.0L252.3 186.0M235.4 202.0L254.7 188.0M263.4 204.0L265.4 186.0M267.7 204.0L269.7 186.0M272.0 204.0L274.0 186.0M276.3 204.0L278.3 186.0M261.4 202.0L280.7 188.0M289.4 204.0L291.4 186.0M293.7 204.0L295.7 186.0M298.0 204.0L300.0 186.0M302.3 204.0L304.3 186.0M287.4 202.0L306.7 188.0M3.4 234.0L5.4 216.0M7.7 234.0L9.7 216.0M12.0 234.0L14.0 216.0M16.3 234.0L18.3 216.0M1.4 232.0L20.7 218.0M29.4 234.0L31.4 216.0M33.7 234.0L35.7 216.0M38.0 234.0L40.0 216.0M42.3 234.0L44.3 216.0M27.4 232.0L46.7 218.0M55.4 234.0L57.4 216.0M59.7 234.0L61.7 216.0M64.0 234.0L66.0 216.0M68.3 234.0L70.3 216.0M53.4 232.0L72.7 218.0M81.4 234.0L83.4 216.0M85.7 234.0L87.7 216.0M90.0 234.0L92.0 216.0M94.3 234.0L96.3 216.0M79.4 232.0L98.7 218.0M107.4 234.0L109.4 216.0M111.7 234.0L113.7 216.0M116.0 234.0L118.0 216.0M120.3 234.0L122.3 216.0M105.4 232.0L124.7 218.0M133.4 234.0L135.4 216.0M137.7 234.0L139.7 216.0M142.0 234.0L144.0 216.0M146.3 234.0L148.3 216.0M131.4 232.0L150.7 218.0M159.4 234.0L161.4 216.0M163.7 234.0L165.7 216.0M168.0 234.0L170.0 216.0M172.3 234.0L174.3 216.0M157.4 232.0L176.7 218.0M185.4 234.0L187.4 216.0M189.7 234.0L191.7 216.0M194.0 234.0L196.0 216.0M198.3 234.0L200.3 216.0M183.4 232.0L202.7 218.0M211.4 234.0L213.4 216.0M215.7 234.0L217.7 216.0M220.0 234.0L222.0 216.0M224.3 234.0L226.3 216.0M209.4 232.0L228.7 218.0M237.4 234.0L239.4 216.0M241.7 234.0L243.7 216.0M246.0 234.0L248.0 216.0M250.3 234.0L252.3 216.0M235.4 232.0L254.7 218.0M263.4 234.0L265.4 216.0M267.7 234.0L269.7 216.0M272.0 234.0L274.0 216.0M276.3 234.0L278.3 216.0M261.4 232.0L280.7 218.0M289.4 234.0L291.4 216.0M293.7 234.0L295.7 216.0M298.0 234.0L300.0 216.0M302.3 234.0L304.3 216.0M287.4 232.0L306.7 218.0"/></g><g class="tally-marked" fill="none" stroke-width="2.1" stroke-linecap="round"><path d="M3.4 54.0L5.4 36.0M7.7 54.0L9.7 36.0M12.0 54.0L14.0 36.0M16.3 54.0L18.3 36.0M1.4 52.0L20.7 38.0M289.4 54.0L291.4 36.0M293.7 54.0L295.7 36.0M298.0 54.0L300.0 36.0M302.3 54.0L304.3 36.0M287.4 52.0L306.7 38.0M3.4 84.0L5.4 66.0M7.7 84.0L9.7 66.0M12.0 84.0L14.0 66.0M16.3 84.0L18.3 66.0M1.4 82.0L20.7 68.0M55.4 114.0L57.4 96.0M59.7 114.0L61.7 96.0M64.0 114.0L66.0 96.0M68.3 114.0L70.3 96.0M53.4 112.0L72.7 98.0M237.4 144.0L239.4 126.0M241.7 144.0L243.7 126.0M246.0 144.0L248.0 126.0M250.3 144.0L252.3 126.0M235.4 142.0L254.7 128.0M289.4 144.0L291.4 126.0M293.7 144.0L295.7 126.0M298.0 144.0L300.0 126.0M302.3 144.0L304.3 126.0M287.4 142.0L306.7 128.0M3.4 174.0L5.4 156.0M7.7 174.0L9.7 156.0M12.0 174.0L14.0 156.0M16.3 174.0L18.3 156.0M1.4 172.0L20.7 158.0M133.4 174.0L135.4 156.0M137.7 174.0L139.7 156.0M142.0 174.0L144.0 156.0M146.3 174.0L148.3 156.0M131.4 172.0L150.7 158.0M289.4 174.0L291.4 156.0M293.7 174.0L295.7 156.0M298.0 174.0L300.0 156.0M302.3 174.0L304.3 156.0M287.4 172.0L306.7 158.0M81.4 204.0L83.4 186.0M85.7 204.0L87.7 186.0M90.0 204.0L92.0 186.0M94.3 204.0L96.3 186.0M79.4 202.0L98.7 188.0M159.4 204.0L161.4 186.0M163.7 204.0L165.7 186.0M168.0 204.0L170.0 186.0M172.3 204.0L174.3 186.0M157.4 202.0L176.7 188.0M211.4 204.0L213.4 186.0M215.7 204.0L217.7 186.0M220.0 204.0L222.0 186.0M224.3 204.0L226.3 186.0M209.4 202.0L228.7 188.0"/></g></svg>
+    <svg class="tally" viewBox="0 0 312 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ninety-six tally groups, twelve of them struck as disputed — 12.5 percent."><g class="tally-plain"><path style="--i:0" pathLength="1" d="M3.4 24.0L5.4 6.0M7.7 24.0L9.7 6.0M12.0 24.0L14.0 6.0M16.3 24.0L18.3 6.0M1.4 22.0L20.7 8.0"/><path style="--i:1" pathLength="1" d="M29.4 24.0L31.4 6.0M33.7 24.0L35.7 6.0M38.0 24.0L40.0 6.0M42.3 24.0L44.3 6.0M27.4 22.0L46.7 8.0"/><path style="--i:2" pathLength="1" d="M55.4 24.0L57.4 6.0M59.7 24.0L61.7 6.0M64.0 24.0L66.0 6.0M68.3 24.0L70.3 6.0M53.4 22.0L72.7 8.0"/><path style="--i:3" pathLength="1" d="M81.4 24.0L83.4 6.0M85.7 24.0L87.7 6.0M90.0 24.0L92.0 6.0M94.3 24.0L96.3 6.0M79.4 22.0L98.7 8.0"/><path style="--i:4" pathLength="1" d="M107.4 24.0L109.4 6.0M111.7 24.0L113.7 6.0M116.0 24.0L118.0 6.0M120.3 24.0L122.3 6.0M105.4 22.0L124.7 8.0"/><path style="--i:5" pathLength="1" d="M133.4 24.0L135.4 6.0M137.7 24.0L139.7 6.0M142.0 24.0L144.0 6.0M146.3 24.0L148.3 6.0M131.4 22.0L150.7 8.0"/><path style="--i:6" pathLength="1" d="M159.4 24.0L161.4 6.0M163.7 24.0L165.7 6.0M168.0 24.0L170.0 6.0M172.3 24.0L174.3 6.0M157.4 22.0L176.7 8.0"/><path style="--i:7" pathLength="1" d="M185.4 24.0L187.4 6.0M189.7 24.0L191.7 6.0M194.0 24.0L196.0 6.0M198.3 24.0L200.3 6.0M183.4 22.0L202.7 8.0"/><path style="--i:8" pathLength="1" d="M211.4 24.0L213.4 6.0M215.7 24.0L217.7 6.0M220.0 24.0L222.0 6.0M224.3 24.0L226.3 6.0M209.4 22.0L228.7 8.0"/><path style="--i:9" pathLength="1" d="M237.4 24.0L239.4 6.0M241.7 24.0L243.7 6.0M246.0 24.0L248.0 6.0M250.3 24.0L252.3 6.0M235.4 22.0L254.7 8.0"/><path style="--i:10" pathLength="1" d="M263.4 24.0L265.4 6.0M267.7 24.0L269.7 6.0M272.0 24.0L274.0 6.0M276.3 24.0L278.3 6.0M261.4 22.0L280.7 8.0"/><path style="--i:11" pathLength="1" d="M289.4 24.0L291.4 6.0M293.7 24.0L295.7 6.0M298.0 24.0L300.0 6.0M302.3 24.0L304.3 6.0M287.4 22.0L306.7 8.0"/><path style="--i:13" pathLength="1" d="M29.4 54.0L31.4 36.0M33.7 54.0L35.7 36.0M38.0 54.0L40.0 36.0M42.3 54.0L44.3 36.0M27.4 52.0L46.7 38.0"/><path style="--i:14" pathLength="1" d="M55.4 54.0L57.4 36.0M59.7 54.0L61.7 36.0M64.0 54.0L66.0 36.0M68.3 54.0L70.3 36.0M53.4 52.0L72.7 38.0"/><path style="--i:15" pathLength="1" d="M81.4 54.0L83.4 36.0M85.7 54.0L87.7 36.0M90.0 54.0L92.0 36.0M94.3 54.0L96.3 36.0M79.4 52.0L98.7 38.0"/><path style="--i:16" pathLength="1" d="M107.4 54.0L109.4 36.0M111.7 54.0L113.7 36.0M116.0 54.0L118.0 36.0M120.3 54.0L122.3 36.0M105.4 52.0L124.7 38.0"/><path style="--i:17" pathLength="1" d="M133.4 54.0L135.4 36.0M137.7 54.0L139.7 36.0M142.0 54.0L144.0 36.0M146.3 54.0L148.3 36.0M131.4 52.0L150.7 38.0"/><path style="--i:18" pathLength="1" d="M159.4 54.0L161.4 36.0M163.7 54.0L165.7 36.0M168.0 54.0L170.0 36.0M172.3 54.0L174.3 36.0M157.4 52.0L176.7 38.0"/><path style="--i:19" pathLength="1" d="M185.4 54.0L187.4 36.0M189.7 54.0L191.7 36.0M194.0 54.0L196.0 36.0M198.3 54.0L200.3 36.0M183.4 52.0L202.7 38.0"/><path style="--i:20" pathLength="1" d="M211.4 54.0L213.4 36.0M215.7 54.0L217.7 36.0M220.0 54.0L222.0 36.0M224.3 54.0L226.3 36.0M209.4 52.0L228.7 38.0"/><path style="--i:21" pathLength="1" d="M237.4 54.0L239.4 36.0M241.7 54.0L243.7 36.0M246.0 54.0L248.0 36.0M250.3 54.0L252.3 36.0M235.4 52.0L254.7 38.0"/><path style="--i:22" pathLength="1" d="M263.4 54.0L265.4 36.0M267.7 54.0L269.7 36.0M272.0 54.0L274.0 36.0M276.3 54.0L278.3 36.0M261.4 52.0L280.7 38.0"/><path style="--i:25" pathLength="1" d="M29.4 84.0L31.4 66.0M33.7 84.0L35.7 66.0M38.0 84.0L40.0 66.0M42.3 84.0L44.3 66.0M27.4 82.0L46.7 68.0"/><path style="--i:26" pathLength="1" d="M55.4 84.0L57.4 66.0M59.7 84.0L61.7 66.0M64.0 84.0L66.0 66.0M68.3 84.0L70.3 66.0M53.4 82.0L72.7 68.0"/><path style="--i:27" pathLength="1" d="M81.4 84.0L83.4 66.0M85.7 84.0L87.7 66.0M90.0 84.0L92.0 66.0M94.3 84.0L96.3 66.0M79.4 82.0L98.7 68.0"/><path style="--i:28" pathLength="1" d="M107.4 84.0L109.4 66.0M111.7 84.0L113.7 66.0M116.0 84.0L118.0 66.0M120.3 84.0L122.3 66.0M105.4 82.0L124.7 68.0"/><path style="--i:29" pathLength="1" d="M133.4 84.0L135.4 66.0M137.7 84.0L139.7 66.0M142.0 84.0L144.0 66.0M146.3 84.0L148.3 66.0M131.4 82.0L150.7 68.0"/><path style="--i:30" pathLength="1" d="M159.4 84.0L161.4 66.0M163.7 84.0L165.7 66.0M168.0 84.0L170.0 66.0M172.3 84.0L174.3 66.0M157.4 82.0L176.7 68.0"/><path style="--i:31" pathLength="1" d="M185.4 84.0L187.4 66.0M189.7 84.0L191.7 66.0M194.0 84.0L196.0 66.0M198.3 84.0L200.3 66.0M183.4 82.0L202.7 68.0"/><path style="--i:32" pathLength="1" d="M211.4 84.0L213.4 66.0M215.7 84.0L217.7 66.0M220.0 84.0L222.0 66.0M224.3 84.0L226.3 66.0M209.4 82.0L228.7 68.0"/><path style="--i:33" pathLength="1" d="M237.4 84.0L239.4 66.0M241.7 84.0L243.7 66.0M246.0 84.0L248.0 66.0M250.3 84.0L252.3 66.0M235.4 82.0L254.7 68.0"/><path style="--i:34" pathLength="1" d="M263.4 84.0L265.4 66.0M267.7 84.0L269.7 66.0M272.0 84.0L274.0 66.0M276.3 84.0L278.3 66.0M261.4 82.0L280.7 68.0"/><path style="--i:35" pathLength="1" d="M289.4 84.0L291.4 66.0M293.7 84.0L295.7 66.0M298.0 84.0L300.0 66.0M302.3 84.0L304.3 66.0M287.4 82.0L306.7 68.0"/><path style="--i:36" pathLength="1" d="M3.4 114.0L5.4 96.0M7.7 114.0L9.7 96.0M12.0 114.0L14.0 96.0M16.3 114.0L18.3 96.0M1.4 112.0L20.7 98.0"/><path style="--i:37" pathLength="1" d="M29.4 114.0L31.4 96.0M33.7 114.0L35.7 96.0M38.0 114.0L40.0 96.0M42.3 114.0L44.3 96.0M27.4 112.0L46.7 98.0"/><path style="--i:39" pathLength="1" d="M81.4 114.0L83.4 96.0M85.7 114.0L87.7 96.0M90.0 114.0L92.0 96.0M94.3 114.0L96.3 96.0M79.4 112.0L98.7 98.0"/><path style="--i:40" pathLength="1" d="M107.4 114.0L109.4 96.0M111.7 114.0L113.7 96.0M116.0 114.0L118.0 96.0M120.3 114.0L122.3 96.0M105.4 112.0L124.7 98.0"/><path style="--i:41" pathLength="1" d="M133.4 114.0L135.4 96.0M137.7 114.0L139.7 96.0M142.0 114.0L144.0 96.0M146.3 114.0L148.3 96.0M131.4 112.0L150.7 98.0"/><path style="--i:42" pathLength="1" d="M159.4 114.0L161.4 96.0M163.7 114.0L165.7 96.0M168.0 114.0L170.0 96.0M172.3 114.0L174.3 96.0M157.4 112.0L176.7 98.0"/><path style="--i:43" pathLength="1" d="M185.4 114.0L187.4 96.0M189.7 114.0L191.7 96.0M194.0 114.0L196.0 96.0M198.3 114.0L200.3 96.0M183.4 112.0L202.7 98.0"/><path style="--i:44" pathLength="1" d="M211.4 114.0L213.4 96.0M215.7 114.0L217.7 96.0M220.0 114.0L222.0 96.0M224.3 114.0L226.3 96.0M209.4 112.0L228.7 98.0"/><path style="--i:45" pathLength="1" d="M237.4 114.0L239.4 96.0M241.7 114.0L243.7 96.0M246.0 114.0L248.0 96.0M250.3 114.0L252.3 96.0M235.4 112.0L254.7 98.0"/><path style="--i:46" pathLength="1" d="M263.4 114.0L265.4 96.0M267.7 114.0L269.7 96.0M272.0 114.0L274.0 96.0M276.3 114.0L278.3 96.0M261.4 112.0L280.7 98.0"/><path style="--i:47" pathLength="1" d="M289.4 114.0L291.4 96.0M293.7 114.0L295.7 96.0M298.0 114.0L300.0 96.0M302.3 114.0L304.3 96.0M287.4 112.0L306.7 98.0"/><path style="--i:48" pathLength="1" d="M3.4 144.0L5.4 126.0M7.7 144.0L9.7 126.0M12.0 144.0L14.0 126.0M16.3 144.0L18.3 126.0M1.4 142.0L20.7 128.0"/><path style="--i:49" pathLength="1" d="M29.4 144.0L31.4 126.0M33.7 144.0L35.7 126.0M38.0 144.0L40.0 126.0M42.3 144.0L44.3 126.0M27.4 142.0L46.7 128.0"/><path style="--i:50" pathLength="1" d="M55.4 144.0L57.4 126.0M59.7 144.0L61.7 126.0M64.0 144.0L66.0 126.0M68.3 144.0L70.3 126.0M53.4 142.0L72.7 128.0"/><path style="--i:51" pathLength="1" d="M81.4 144.0L83.4 126.0M85.7 144.0L87.7 126.0M90.0 144.0L92.0 126.0M94.3 144.0L96.3 126.0M79.4 142.0L98.7 128.0"/><path style="--i:52" pathLength="1" d="M107.4 144.0L109.4 126.0M111.7 144.0L113.7 126.0M116.0 144.0L118.0 126.0M120.3 144.0L122.3 126.0M105.4 142.0L124.7 128.0"/><path style="--i:53" pathLength="1" d="M133.4 144.0L135.4 126.0M137.7 144.0L139.7 126.0M142.0 144.0L144.0 126.0M146.3 144.0L148.3 126.0M131.4 142.0L150.7 128.0"/><path style="--i:54" pathLength="1" d="M159.4 144.0L161.4 126.0M163.7 144.0L165.7 126.0M168.0 144.0L170.0 126.0M172.3 144.0L174.3 126.0M157.4 142.0L176.7 128.0"/><path style="--i:55" pathLength="1" d="M185.4 144.0L187.4 126.0M189.7 144.0L191.7 126.0M194.0 144.0L196.0 126.0M198.3 144.0L200.3 126.0M183.4 142.0L202.7 128.0"/><path style="--i:56" pathLength="1" d="M211.4 144.0L213.4 126.0M215.7 144.0L217.7 126.0M220.0 144.0L222.0 126.0M224.3 144.0L226.3 126.0M209.4 142.0L228.7 128.0"/><path style="--i:58" pathLength="1" d="M263.4 144.0L265.4 126.0M267.7 144.0L269.7 126.0M272.0 144.0L274.0 126.0M276.3 144.0L278.3 126.0M261.4 142.0L280.7 128.0"/><path style="--i:61" pathLength="1" d="M29.4 174.0L31.4 156.0M33.7 174.0L35.7 156.0M38.0 174.0L40.0 156.0M42.3 174.0L44.3 156.0M27.4 172.0L46.7 158.0"/><path style="--i:62" pathLength="1" d="M55.4 174.0L57.4 156.0M59.7 174.0L61.7 156.0M64.0 174.0L66.0 156.0M68.3 174.0L70.3 156.0M53.4 172.0L72.7 158.0"/><path style="--i:63" pathLength="1" d="M81.4 174.0L83.4 156.0M85.7 174.0L87.7 156.0M90.0 174.0L92.0 156.0M94.3 174.0L96.3 156.0M79.4 172.0L98.7 158.0"/><path style="--i:64" pathLength="1" d="M107.4 174.0L109.4 156.0M111.7 174.0L113.7 156.0M116.0 174.0L118.0 156.0M120.3 174.0L122.3 156.0M105.4 172.0L124.7 158.0"/><path style="--i:66" pathLength="1" d="M159.4 174.0L161.4 156.0M163.7 174.0L165.7 156.0M168.0 174.0L170.0 156.0M172.3 174.0L174.3 156.0M157.4 172.0L176.7 158.0"/><path style="--i:67" pathLength="1" d="M185.4 174.0L187.4 156.0M189.7 174.0L191.7 156.0M194.0 174.0L196.0 156.0M198.3 174.0L200.3 156.0M183.4 172.0L202.7 158.0"/><path style="--i:68" pathLength="1" d="M211.4 174.0L213.4 156.0M215.7 174.0L217.7 156.0M220.0 174.0L222.0 156.0M224.3 174.0L226.3 156.0M209.4 172.0L228.7 158.0"/><path style="--i:69" pathLength="1" d="M237.4 174.0L239.4 156.0M241.7 174.0L243.7 156.0M246.0 174.0L248.0 156.0M250.3 174.0L252.3 156.0M235.4 172.0L254.7 158.0"/><path style="--i:70" pathLength="1" d="M263.4 174.0L265.4 156.0M267.7 174.0L269.7 156.0M272.0 174.0L274.0 156.0M276.3 174.0L278.3 156.0M261.4 172.0L280.7 158.0"/><path style="--i:72" pathLength="1" d="M3.4 204.0L5.4 186.0M7.7 204.0L9.7 186.0M12.0 204.0L14.0 186.0M16.3 204.0L18.3 186.0M1.4 202.0L20.7 188.0"/><path style="--i:73" pathLength="1" d="M29.4 204.0L31.4 186.0M33.7 204.0L35.7 186.0M38.0 204.0L40.0 186.0M42.3 204.0L44.3 186.0M27.4 202.0L46.7 188.0"/><path style="--i:74" pathLength="1" d="M55.4 204.0L57.4 186.0M59.7 204.0L61.7 186.0M64.0 204.0L66.0 186.0M68.3 204.0L70.3 186.0M53.4 202.0L72.7 188.0"/><path style="--i:76" pathLength="1" d="M107.4 204.0L109.4 186.0M111.7 204.0L113.7 186.0M116.0 204.0L118.0 186.0M120.3 204.0L122.3 186.0M105.4 202.0L124.7 188.0"/><path style="--i:77" pathLength="1" d="M133.4 204.0L135.4 186.0M137.7 204.0L139.7 186.0M142.0 204.0L144.0 186.0M146.3 204.0L148.3 186.0M131.4 202.0L150.7 188.0"/><path style="--i:79" pathLength="1" d="M185.4 204.0L187.4 186.0M189.7 204.0L191.7 186.0M194.0 204.0L196.0 186.0M198.3 204.0L200.3 186.0M183.4 202.0L202.7 188.0"/><path style="--i:81" pathLength="1" d="M237.4 204.0L239.4 186.0M241.7 204.0L243.7 186.0M246.0 204.0L248.0 186.0M250.3 204.0L252.3 186.0M235.4 202.0L254.7 188.0"/><path style="--i:82" pathLength="1" d="M263.4 204.0L265.4 186.0M267.7 204.0L269.7 186.0M272.0 204.0L274.0 186.0M276.3 204.0L278.3 186.0M261.4 202.0L280.7 188.0"/><path style="--i:83" pathLength="1" d="M289.4 204.0L291.4 186.0M293.7 204.0L295.7 186.0M298.0 204.0L300.0 186.0M302.3 204.0L304.3 186.0M287.4 202.0L306.7 188.0"/><path style="--i:84" pathLength="1" d="M3.4 234.0L5.4 216.0M7.7 234.0L9.7 216.0M12.0 234.0L14.0 216.0M16.3 234.0L18.3 216.0M1.4 232.0L20.7 218.0"/><path style="--i:85" pathLength="1" d="M29.4 234.0L31.4 216.0M33.7 234.0L35.7 216.0M38.0 234.0L40.0 216.0M42.3 234.0L44.3 216.0M27.4 232.0L46.7 218.0"/><path style="--i:86" pathLength="1" d="M55.4 234.0L57.4 216.0M59.7 234.0L61.7 216.0M64.0 234.0L66.0 216.0M68.3 234.0L70.3 216.0M53.4 232.0L72.7 218.0"/><path style="--i:87" pathLength="1" d="M81.4 234.0L83.4 216.0M85.7 234.0L87.7 216.0M90.0 234.0L92.0 216.0M94.3 234.0L96.3 216.0M79.4 232.0L98.7 218.0"/><path style="--i:88" pathLength="1" d="M107.4 234.0L109.4 216.0M111.7 234.0L113.7 216.0M116.0 234.0L118.0 216.0M120.3 234.0L122.3 216.0M105.4 232.0L124.7 218.0"/><path style="--i:89" pathLength="1" d="M133.4 234.0L135.4 216.0M137.7 234.0L139.7 216.0M142.0 234.0L144.0 216.0M146.3 234.0L148.3 216.0M131.4 232.0L150.7 218.0"/><path style="--i:90" pathLength="1" d="M159.4 234.0L161.4 216.0M163.7 234.0L165.7 216.0M168.0 234.0L170.0 216.0M172.3 234.0L174.3 216.0M157.4 232.0L176.7 218.0"/><path style="--i:91" pathLength="1" d="M185.4 234.0L187.4 216.0M189.7 234.0L191.7 216.0M194.0 234.0L196.0 216.0M198.3 234.0L200.3 216.0M183.4 232.0L202.7 218.0"/><path style="--i:92" pathLength="1" d="M211.4 234.0L213.4 216.0M215.7 234.0L217.7 216.0M220.0 234.0L222.0 216.0M224.3 234.0L226.3 216.0M209.4 232.0L228.7 218.0"/><path style="--i:93" pathLength="1" d="M237.4 234.0L239.4 216.0M241.7 234.0L243.7 216.0M246.0 234.0L248.0 216.0M250.3 234.0L252.3 216.0M235.4 232.0L254.7 218.0"/><path style="--i:94" pathLength="1" d="M263.4 234.0L265.4 216.0M267.7 234.0L269.7 216.0M272.0 234.0L274.0 216.0M276.3 234.0L278.3 216.0M261.4 232.0L280.7 218.0"/><path style="--i:95" pathLength="1" d="M289.4 234.0L291.4 216.0M293.7 234.0L295.7 216.0M298.0 234.0L300.0 216.0M302.3 234.0L304.3 216.0M287.4 232.0L306.7 218.0"/></g><g class="tally-marked"><path style="--i:12;--j:0" pathLength="1" d="M3.4 54.0L5.4 36.0M7.7 54.0L9.7 36.0M12.0 54.0L14.0 36.0M16.3 54.0L18.3 36.0M1.4 52.0L20.7 38.0"/><path style="--i:23;--j:1" pathLength="1" d="M289.4 54.0L291.4 36.0M293.7 54.0L295.7 36.0M298.0 54.0L300.0 36.0M302.3 54.0L304.3 36.0M287.4 52.0L306.7 38.0"/><path style="--i:24;--j:2" pathLength="1" d="M3.4 84.0L5.4 66.0M7.7 84.0L9.7 66.0M12.0 84.0L14.0 66.0M16.3 84.0L18.3 66.0M1.4 82.0L20.7 68.0"/><path style="--i:38;--j:3" pathLength="1" d="M55.4 114.0L57.4 96.0M59.7 114.0L61.7 96.0M64.0 114.0L66.0 96.0M68.3 114.0L70.3 96.0M53.4 112.0L72.7 98.0"/><path style="--i:57;--j:4" pathLength="1" d="M237.4 144.0L239.4 126.0M241.7 144.0L243.7 126.0M246.0 144.0L248.0 126.0M250.3 144.0L252.3 126.0M235.4 142.0L254.7 128.0"/><path style="--i:59;--j:5" pathLength="1" d="M289.4 144.0L291.4 126.0M293.7 144.0L295.7 126.0M298.0 144.0L300.0 126.0M302.3 144.0L304.3 126.0M287.4 142.0L306.7 128.0"/><path style="--i:60;--j:6" pathLength="1" d="M3.4 174.0L5.4 156.0M7.7 174.0L9.7 156.0M12.0 174.0L14.0 156.0M16.3 174.0L18.3 156.0M1.4 172.0L20.7 158.0"/><path style="--i:65;--j:7" pathLength="1" d="M133.4 174.0L135.4 156.0M137.7 174.0L139.7 156.0M142.0 174.0L144.0 156.0M146.3 174.0L148.3 156.0M131.4 172.0L150.7 158.0"/><path style="--i:71;--j:8" pathLength="1" d="M289.4 174.0L291.4 156.0M293.7 174.0L295.7 156.0M298.0 174.0L300.0 156.0M302.3 174.0L304.3 156.0M287.4 172.0L306.7 158.0"/><path style="--i:75;--j:9" pathLength="1" d="M81.4 204.0L83.4 186.0M85.7 204.0L87.7 186.0M90.0 204.0L92.0 186.0M94.3 204.0L96.3 186.0M79.4 202.0L98.7 188.0"/><path style="--i:78;--j:10" pathLength="1" d="M159.4 204.0L161.4 186.0M163.7 204.0L165.7 186.0M168.0 204.0L170.0 186.0M172.3 204.0L174.3 186.0M157.4 202.0L176.7 188.0"/><path style="--i:80;--j:11" pathLength="1" d="M211.4 204.0L213.4 186.0M215.7 204.0L217.7 186.0M220.0 204.0L222.0 186.0M224.3 204.0L226.3 186.0M209.4 202.0L228.7 188.0"/></g></svg>
     <div class="zero-line reading"></div>
     <p class="fig-row">
       <span>fig. 02 &mdash; the tare</span>
@@ -486,11 +604,11 @@
       <tbody>
         <tr>
           <th scope="row">Resolution rate, as billed by the vendor</th>
-          <td>40%</td>
+          <td data-count>40%</td>
         </tr>
         <tr class="recount">
           <th scope="row">Resolution rate, recounted from the helpdesk export</th>
-          <td>12.5%</td>
+          <td data-count>12.5%</td>
         </tr>
       </tbody>
     </table>
@@ -545,16 +663,16 @@
         </p>
         <hr class="rule-2">
 
-        <p class="block-label">Tier 1 — the vendor&rsquo;s own published rules</p>
+        <p class="block-label">Tier 1 &mdash; the vendor&rsquo;s own published rules</p>
         <table class="stmt">
           <tbody>
-            <tr><th scope="row">Vendor billed</th><td>49</td><td>$48.51</td></tr>
-            <tr><th scope="row">TareCount recount</th><td>33</td><td>$32.67</td></tr>
-            <tr class="total variance"><th scope="row">Variance</th><td>+16</td><td>$15.84</td></tr>
+            <tr><th scope="row">Vendor billed</th><td data-count>49</td><td data-count>$48.51</td></tr>
+            <tr><th scope="row">TareCount recount</th><td data-count>33</td><td data-count>$32.67</td></tr>
+            <tr class="total variance"><th scope="row">Variance</th><td data-count>+16</td><td data-count>$15.84</td></tr>
           </tbody>
         </table>
 
-        <p class="block-label">Disputed under Tier 1 — 21 conversations</p>
+        <p class="block-label">Disputed under Tier 1 &mdash; 21 conversations</p>
         <div class="scroll-x">
         <table class="stmt wide">
           <thead>
@@ -566,25 +684,25 @@
             <tr class="disputed"><th scope="row">C-1010</th><td>1</td><td>0</td><td>$0.99</td><td>vendor_outcome_delivered</td></tr>
             <tr class="disputed"><th scope="row">C-1014</th><td>1</td><td>0</td><td>$0.99</td><td>vendor_outcome_delivered</td></tr>
             <tr class="disputed"><th scope="row">C-1020</th><td>1</td><td>0</td><td>$0.99</td><td>vendor_not_reopened</td></tr>
-            <tr><td class="elision" colspan="5">…16 more, each with its line number in your export</td></tr>
+            <tr><td class="elision" colspan="5">&hellip;16 more, each with its line number in your export</td></tr>
           </tbody>
         </table>
         </div>
 
-        <p class="block-label">Tier 2 — ARS-lite, the stricter standard</p>
+        <p class="block-label">Tier 2 &mdash; ARS-lite, the stricter standard</p>
         <table class="stmt">
           <tbody>
-            <tr><th scope="row">Vendor billed</th><td>49</td><td>$48.51</td></tr>
-            <tr><th scope="row">TareCount recount</th><td>25</td><td>$24.75</td></tr>
-            <tr class="total variance"><th scope="row">Variance</th><td>+24</td><td>$23.76</td></tr>
+            <tr><th scope="row">Vendor billed</th><td data-count>49</td><td data-count>$48.51</td></tr>
+            <tr><th scope="row">TareCount recount</th><td data-count>25</td><td data-count>$24.75</td></tr>
+            <tr class="total variance"><th scope="row">Variance</th><td data-count>+24</td><td data-count>$23.76</td></tr>
           </tbody>
         </table>
 
         <p class="block-label">Also reported</p>
         <table class="stmt also">
           <tbody>
-            <tr><th scope="row">Disputed-gray (vendor rules allow it, ARS does not)</th><td>8</td></tr>
-            <tr><th scope="row">Underbilled, in the vendor&rsquo;s favour</th><td>5</td></tr>
+            <tr><th scope="row">Disputed-gray (vendor rules allow it, ARS does not)</th><td data-count>8</td></tr>
+            <tr><th scope="row">Underbilled, in the vendor&rsquo;s favour</th><td data-count>5</td></tr>
           </tbody>
         </table>
       </div>
@@ -634,5 +752,110 @@
   </footer>
 
 </main>
+<script>
+/* Two behaviours, both optional. The page above is already finished and
+   correct: every figure is in the markup as text, and the zero lines are
+   drawn by CSS. This changes only how they arrive.
+
+   Nothing here runs for a reader who has asked for reduced motion, or on a
+   browser without IntersectionObserver. */
+(function () {
+  "use strict";
+  var mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+  if ((mq && mq.matches) || !("IntersectionObserver" in window)) return;
+
+  /* --- the pointer settling onto each zero line --------------------- */
+  var settle = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("settled");
+      settle.unobserve(e.target);
+    });
+  }, { rootMargin: "0px 0px -12% 0px" });
+  var lines = document.querySelectorAll(".zero-line");
+  for (var i = 0; i < lines.length; i++) settle.observe(lines[i]);
+
+  /* --- figures counting up ------------------------------------------
+     These are audit figures. The one thing this must never do is leave a
+     number on screen that is not the number.
+
+     So the element's own text is the source of truth, it is written back
+     verbatim to finish, and every path out of the animation — the last
+     frame, the tab being hidden, a timer backstop, a thrown error —
+     goes through the same finalise(). A frozen requestAnimationFrame
+     cannot strand a half-counted figure like "6%" where the statement
+     says 40%. */
+  var FIG = /^([^\d-]*)(-?[\d,]+(?:\.\d+)?)(.*)$/;
+  var inFlight = [];
+
+  function finaliseAll() {
+    while (inFlight.length) inFlight.pop()();
+  }
+  /* The moment the page stops being watched, every figure snaps to truth. */
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState !== "visible") finaliseAll();
+  });
+  window.addEventListener("pagehide", finaliseAll);
+
+  function animate(el) {
+    var final = el.textContent;
+    var m = FIG.exec(final.trim());
+    if (!m) return;
+    var head = m[1], tail = m[3];
+    var target = parseFloat(m[2].replace(/,/g, ""));
+    if (!isFinite(target)) return;
+    var decimals = (m[2].split(".")[1] || "").length;
+    var grouped = m[2].indexOf(",") > -1;
+    var DUR = 900, t0 = 0, done = false, backstop;
+
+    function finalise() {
+      if (done) return;
+      done = true;
+      clearTimeout(backstop);
+      el.textContent = final;                 /* exactly what was written */
+      el.style.minWidth = "";
+    }
+    inFlight.push(finalise);
+
+    /* Hold the finished width so no row reflows while the digits move. */
+    el.style.minWidth = el.getBoundingClientRect().width + "px";
+    /* Wall-clock backstop: fires even if rAF never runs again. */
+    backstop = setTimeout(finalise, DUR + 400);
+
+    function frame(now) {
+      if (done) return;
+      if (!t0) t0 = now;
+      var p = Math.min(1, (now - t0) / DUR);
+      if (p >= 1) return finalise();
+      try {
+        var eased = 1 - Math.pow(1 - p, 3);   /* decelerate, no overshoot */
+        var v = (target * eased).toFixed(decimals);
+        if (grouped) {
+          var parts = v.split(".");
+          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          v = parts.join(".");
+        }
+        el.textContent = head + v + tail;
+      } catch (err) {
+        return finalise();
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  var counter = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      counter.unobserve(e.target);
+      /* Never start one we cannot watch finish. */
+      if (document.visibilityState !== "visible") return;
+      animate(e.target);
+    });
+  }, { rootMargin: "0px 0px -10% 0px" });
+  var figures = document.querySelectorAll("[data-count]");
+  for (var k = 0; k < figures.length; k++) counter.observe(figures[k]);
+})();
+</script>
 </body>
 </html>
