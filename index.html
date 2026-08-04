@@ -488,7 +488,10 @@
   @media (max-width: 34rem) {
     ol.steps li { grid-template-columns: 1fr; gap: 0; }
     ol.steps li::before { display: block; padding: 0 0 var(--s1); }
-    .offer dl { grid-template-columns: 1fr; }
+    /* The grid lives on .line, not on the dl — stacking it here is what
+       keeps "Full audit + negotiation evidence pack" off three cramped
+       lines beside its price. */
+    .offer .line { grid-template-columns: 1fr; gap: var(--s1); }
     .offer dd { text-align: left; }
     .cta { display: block; text-align: center; }
     .doc-inner { font-size: var(--t-micro); }
