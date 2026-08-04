@@ -154,11 +154,16 @@
   section { padding: var(--s6) 0; }
 
   /* fig. numbering — BRAND.md allows `fig. 01 —` mono labels. Restrained,
-     lower case, annotation grey, exactly as they are set on the sheet. */
+     lower case, annotation grey, exactly as they are set on the sheet.
+
+     Used on both a paragraph caption and the h2 that heads each section,
+     so it resets the heading defaults rather than assuming a paragraph. */
   .label {
     font-family: var(--mono);
     font-size: var(--t-small);
+    font-weight: 400;
     letter-spacing: 0.01em;
+    line-height: inherit;
     color: var(--annotation);
     margin: 0 0 var(--s4);
   }
@@ -228,9 +233,10 @@
      fig. 01. 96 groups, 12 struck: 12.5%. The plain marks are ink held
      back to a texture — BRAND.md allows no sixth colour to grey them with.
 
-     Every group is one <path pathLength="1">, so a single dasharray draws
-     any of them. This is the finished state: the field is complete and
-     correct with no script, no animation, and no support for either.
+     Every group is one path element with its length normalised to 1, so a
+     single dasharray draws any of them. This is the finished state: the
+     field is complete and correct with no script, no animation, and no
+     support for either.
      ------------------------------------------------------------------ */
   .tally { display: block; width: 100%; height: auto; }
   .tally g { fill: none; stroke-linecap: round; }
@@ -390,13 +396,20 @@
     padding: clamp(var(--s4), 4vw, var(--s5));
     margin: 0;
   }
-  .offer dl {
-    margin: 0;
+  /* A definition list may contain only dt, dd, div, script and template.
+     The rule between the two lines is therefore a border on the second
+     pair, not a horizontal-rule element, which is invalid as a dl child. */
+  .offer dl { margin: 0; }
+  .offer .line {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: var(--s2) var(--s3);
     align-items: baseline;
+    padding: var(--s2) 0;
   }
+  .offer .line + .line { border-top: 1px solid var(--hairline); }
+  .offer .line:first-child { padding-top: 0; }
+  .offer .line:last-child { padding-bottom: 0; }
   .offer dt { font-size: var(--t-body); line-height: 1.45; }
   .offer dd {
     margin: 0;
@@ -414,7 +427,6 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
-  .offer hr { grid-column: 1 / -1; border: 0; border-top: 1px solid var(--hairline); margin: var(--s1) 0; }
 
   .cta-row {
     margin-top: var(--s5);
@@ -594,7 +606,7 @@
 
   <div class="zero-line"></div>
   <section aria-labelledby="case-heading">
-    <p class="label" id="case-heading">fig. 03 &mdash; what a recount finds</p>
+    <h2 class="label" id="case-heading">fig. 03 &mdash; what a recount finds</h2>
     <p class="case">
       One support team hand-checked its AI agent&rsquo;s bill: the vendor claimed a
       40% resolution rate. The real number was 12.5% &mdash; mostly
@@ -616,7 +628,7 @@
 
   <div class="zero-line"></div>
   <section aria-labelledby="how-heading">
-    <p class="label" id="how-heading">fig. 04 &mdash; how it works</p>
+    <h2 class="label" id="how-heading">fig. 04 &mdash; how it works</h2>
     <ol class="steps">
       <li>
         <div>
@@ -648,7 +660,7 @@
 
   <div class="zero-line"></div>
   <section aria-labelledby="doc-heading">
-    <p class="label" id="doc-heading">fig. 05 &mdash; the document you get</p>
+    <h2 class="label" id="doc-heading">fig. 05 &mdash; the document you get</h2>
     <p class="doc-intro">
       The product is this page of paper. Below is a real one, produced by the tool
       from the sample export that ships with it &mdash; not a mock-up.
@@ -717,14 +729,17 @@
 
   <div class="zero-line"></div>
   <section aria-labelledby="offer-heading">
-    <p class="label" id="offer-heading">fig. 06 &mdash; engagement</p>
+    <h2 class="label" id="offer-heading">fig. 06 &mdash; engagement</h2>
     <div class="offer">
       <dl>
-        <dt>Sample check on one month</dt>
-        <dd class="free">Free</dd>
-        <hr>
-        <dt>Full audit &plus; negotiation evidence pack</dt>
-        <dd class="price">$2,500 flat</dd>
+        <div class="line">
+          <dt>Sample check on one month</dt>
+          <dd class="free">Free</dd>
+        </div>
+        <div class="line">
+          <dt>Full audit &plus; negotiation evidence pack</dt>
+          <dd class="price">$2,500 flat</dd>
+        </div>
       </dl>
     </div>
     <div class="cta-row">
