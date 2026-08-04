@@ -60,8 +60,11 @@
     --verdict:    #b0552f;
     --annotation: #797368;
     --hairline:   #e4e0d6;
-    /* Paper laid on paper: ink at 2%, not a sixth hue. */
-    --paper-2:    rgba(24, 22, 15, 0.022);
+    /* Paper laid on paper. The page is the cream blotter; a document set
+       down on it is the whiter object, not the dirtier one. Lighten the
+       artifact, never darken it — an ink wash here put annotation text
+       at 4.31:1 with no alpha able to recover it. See DECISIONS #42. */
+    --paper-2:    #ffffff;
 
     --display: "Gloock", "Iowan Old Style", Georgia, "Times New Roman", serif;
     --italic:  "Instrument Serif", Georgia, "Times New Roman", serif;
