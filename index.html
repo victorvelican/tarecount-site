@@ -49,12 +49,16 @@
   }
 
   :root {
-    /* BRAND.md v1.0 — five colours, and no sixth. Verdict-terracotta is
-       earned: disputed items, the pointer, the tagline, links, the CTA. */
+    /* BRAND.md — five colours, and no sixth. Verdict-terracotta is
+       earned: disputed items, the pointer, the tagline, links, the CTA.
+
+       --annotation was #7A7468 until it was measured at 4.446:1 against
+       paper, failing WCAG AA by 1.2%. #797368 is the same hue and
+       saturation one step darker: 4.506:1. See DECISIONS #41. */
     --paper:      #fbfaf7;
     --ink:        #18160f;
     --verdict:    #b0552f;
-    --annotation: #7a7468;
+    --annotation: #797368;
     --hairline:   #e4e0d6;
     /* Paper laid on paper: ink at 2%, not a sixth hue. */
     --paper-2:    rgba(24, 22, 15, 0.022);
