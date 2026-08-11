@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="TareCount">
+<title>TareCount — the Recount Strike</title>
+<rect width="64" height="64" fill="#FBFAF7"/>
+<path d="M17 13v38M27 13v38M37 13v38M47 13v38" stroke="#18160F" stroke-width="4" fill="none"/>
+<path d="M6.3 17.8 57.7 46.2" stroke="#B0552F" stroke-width="4" fill="none"/>
+</svg>

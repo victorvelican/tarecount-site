@@ -7,6 +7,11 @@
 <meta name="description" content="Independent audits of AI support billing. Your AI support vendor counts its own billable resolutions. We recount them from your own helpdesk data.">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23FBFAF7'/%3E%3Cpath d='M17 13v38M27 13v38M37 13v38M47 13v38' stroke='%2318160F' stroke-width='4' fill='none'/%3E%3Cpath d='M6.3 17.8 57.7 46.2' stroke='%23B0552F' stroke-width='4' fill='none'/%3E%3C/svg%3E">
+<!-- The inline mark is what a visitor sees; it costs no request. The two
+     files below exist because crawlers cannot fetch a data: URI — Google's
+     favicon fetcher needs a real URL. Same-origin, so still nothing third-party. -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <!-- The display face carries the wordmark, which is the first thing read. -->
 <link rel="preload" as="font" type="font/woff2" href="fonts/gloock-latin-400.woff2" crossorigin>
 <meta property="og:title" content="TareCount — Trust, but recount.">
@@ -590,6 +595,17 @@
     footer { padding: var(--s3) 0 0; margin-top: var(--s3); }
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "TareCount",
+  "url": "https://tarecount.com",
+  "logo": "https://tarecount.com/logo-512.png",
+  "description": "Independent audits of AI support billing",
+  "sameAs": ["https://www.linkedin.com/company/tarecount/"]
+}
+</script>
 </head>
 <body>
 <main class="sheet">

@@ -1,0 +1,5 @@
+# tarecount.com — one page, nothing hidden.
+User-agent: *
+Allow: /
+
+Sitemap: https://tarecount.com/sitemap.xml
